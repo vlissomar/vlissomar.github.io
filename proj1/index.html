@@ -433,7 +433,7 @@
     &emsp;To use this acceleration structure, we start from the highest level and run the single-scale alignment algorithm to find the offset. Again, each pixel at the coarse level represents many pixels at the fine level, so it speeds up our search within a displacement window significantly by covering more area. Scale the offset up and accumulate it as we move to finer levels, until it can be directly applied to the original image for alignment. 
     &emsp; Another thing to note is that as long as more pyramid levels can be made (within reason), the more the displacement window can be minimized, which tends to mean less matrix calculations. I can reliably run my program under a minute, and often, it takes only half that time when using a displacement window of [-5, 5]. 
 	
-    <p class="section-tag">03 &nbsp; Results</p>
+    <p class="section-tag">&nbsp; Results</p>
         <h3>Image Gallery</h3>
 
         &emsp;Behold!<section>
