@@ -405,16 +405,15 @@
             </div>
             <div class="img-slot">
 				  <img src="monastery_single.jpg"/>
-				  <figcaption>R: (3, -5) | G: (3, -5)</figcaption>
+				  <figcaption>R: (2, -11) | G: (2, -13)</figcaption>
             </div>
             <div class="img-slot">
 				  <img src="tobolsk_single.jpg"/>
 				  <figcaption>R: (3, -5) | G: (3, -3)</figcaption>
             </div>
     </div>
-
-	&emsp;I actually overcomplicated this part a lot. My first implementation, I padded a border of 0s the width of the displacement window, because I assumed it would be very bad if the image wrapped around. I got it to not only work, but work (what I thought believed to be) very well with the images I was working with, and assumed that minor artifacts within a couple pixels was due to the use of heuristics. Evidently, that's not entirely true, as even though the first couple of .tif files worked fine, others tried to shift the color channel off entirely. <br>
-    &emsp;My current implementation just lets the pixels roll right around the edges to the other side, and computes similarity on a centered rectangle of pixels in the middle. Though our scoring heuristic may rate it to be relatively more similar on account of things like color palette or repetitive textures like tiles/grass, this border will have relatively small weight or even no weight.<br>
+	&emsp; I actually overcomplicated this part a lot. My first implementation, I padded a border of 0s the width of the displacement window, because I assumed it would be very bad if the image wrapped around. I got it to not only work, but work (what I thought believed to be) very well with the images I was working with, and assumed that minor artifacts within a couple pixels was due to the use of heuristics. Evidently, that's not entirely true, as even though the first couple of .tif files worked fine, others tried to shift the color channel off entirely. <br>
+    &emsp; My current implementation just lets the pixels roll right around the edges to the other side, and computes similarity on a centered rectangle of pixels in the middle. Though our scoring heuristic may rate it to be relatively more similar on account of things like color palette or repetitive textures like tiles/grass, this border will have relatively small weight or even no weight.<br>
     &emsp; Here, I also included a lazy brute force border detection pre-processing; before the change to not padding, this was very necessary to aligning for some reason. From each side, I pick a middle row or column, then march towards the center until the value of the next pixel is noticably different from the average. After averaging these estimates, I chop off a border of that size from the combined 3-channel image before splitting for processing.
     
     <h3>Part 2: Acceleration Structure--Image Pyramids</h3>
@@ -441,66 +440,82 @@
         <div class="img-grid">
             <div class="img-slot">
                 <img src="cathedral_out.jpg"/>
+				<figcaption>R: (3, -4) | G: (2, -3)</figcaption>
             </div>
             <div class="img-slot">
                 <img src="church_out.jpg"/>
+				<figcaption>R: (-4, -16) | G: (4, -12)</figcaption>
             </div>
         </div>
 
         <div class="img-grid">
             <div class="img-slot">
                 <img src="harvesters_out.jpg"/>
+				<figcaption>R: (14, 19) | G: (17, 7)</figcaption>
             </div>
             <div class="img-slot">
                 <img src="icon_out.jpg"/>
+				<figcaption>R: (23, 12) | G: (17, 2)</figcaption>
             </div>
         </div>
         <div class="img-grid">
             <div class="img-slot">
                 <img src="ilemselga_out.jpg"/>
+				<figcaption>R: (11, -17) | G: (7, -34)</figcaption>
             </div>
             <div class="img-slot">
                 <img src="melons_out.jpg"/>
+				<figcaption>R: (13, 30) | G: (10, 9)</figcaption>
             </div>
         </div>
         <div class="img-grid">
             <div class="img-slot">
                 <img src="monastery_out.jpg"/>
+				<figcaption>R: (2, -13) | G: (2, -11)</figcaption>
             </div>
             <div class="img-slot">
                 <img src="religous_painting_out.jpg"/>
+				<figcaption>R: (7, -55) | G: (3, -34)</figcaption>
             </div>
         </div>
         <div class="img-grid">
             <div class="img-slot">
                 <img src="self_portrait_out.jpg"/>
+				<figcaption>R: (37, -11) | G: (29, -15)</figcaption>
             </div>
             <div class="img-slot">
                 <img src="siren_out.jpg"/>
+				<figcaption>R: (-24, -29) | G: (-5, -14)</figcaption>
             </div>
         </div>
         <div class="img-grid">
             <div class="img-slot">
                 <img src="three_generations_out.jpg"/>
+				<figcaption>R: (14, -14) | G: (12, -21)</figcaption>
             </div>
             <div class="img-slot">
                 <img src="tobolsk_out.jpg"/>
+				<figcaption>R: (3, -5) | G: (3, -3)</figcaption>
             </div>
         </div>
         <div class="img-grid">
             <div class="img-slot">
                 <img src="wharf_out.jpg"/>
+				<figcaption>R: (-15, -36) | G: (2, -3)</figcaption>
             </div>
             <div class="img-slot">
                 <img src="dog_out.jpg"/>
+				<figcaption>R: (8, -5) | G: (10, -9)</figcaption>
             </div>
         </div>
         <div class="img-grid">
             <div class="img-slot">
                 <img src="interior_out.jpg"/>
+				<figcaption>R: (-5, 4) | G: (2, -3)</figcaption>
             </div>
             <div class="img-slot">
                 <img src="train_out.jpg"/>
+				<figcaption>R: (33, -28) | G: (6, -15)</figcaption>
             </div>
         </div>
     </section>
