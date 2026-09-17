@@ -418,23 +418,11 @@
     
     <h3>Part 2: Acceleration Structure--Image Pyramids</h3>
 
-	<div class="img-grid">
-            <div class="img-slot">
-				  <img src="doe_close.png"/>
-				  <figcaption>close up</figcaption>
-            </div>
-            <div class="img-slot">
-				  <img src="doe_far.png"/>
-				  <figcaption>zoomed in</figcaption>
-            </div>
-    </div>
     &emsp;The tif files are much larger, which makes it very costly in time to align. That's where multi-scale image pyramids come in. Starting from the original image, I downsample by a factor of 2. To prevent aliasing, a Gaussian blur must be applied so that each pixel sampled represents not just itself, but the pixels around it that were discarded. I took the liberty of using scipy's 2D convolution function in this part. Iterative downsampling is also convenient in that the same Gaussian kernel can be reused to get to the next level. I also made some helper functions to set a good max level for the pyramid.<br>
     &emsp;To use this acceleration structure, we start from the highest level and run the single-scale alignment algorithm to find the offset. Again, each pixel at the coarse level represents many pixels at the fine level, so it speeds up our search within a displacement window significantly by covering more area. Scale the offset up and accumulate it as we move to finer levels, until it can be directly applied to the original image for alignment. <br>
     &emsp; Another thing to note is that as long as more pyramid levels can be made (within reason), the more the displacement window can be minimized, which tends to mean less matrix calculations. I can reliably run my program under a minute, and often, it takes only half that time when using a displacement window of [-5, 5]. 
 	
-    <p class="section-tag">&nbsp; Results</p>
-        <h3>Image Gallery</h3>
-
+    <p class="section-tag">&nbsp; Image Gallery</p>
         &emsp;Behold!<section>
 
         <div class="img-grid">
