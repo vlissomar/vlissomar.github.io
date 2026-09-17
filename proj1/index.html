@@ -1,16 +1,517 @@
 <!DOCTYPE html>
-<html>
+
+<!-- credit goes to Allena Olgvie for the prettiness of this page, who originally used this style on a different group project I worked with her on-->
+
+<html lang="en">
 <head>
-    <title>My Portfolio</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sophia Liu - Project 0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&display=swap" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=default"></script>
     <style>
+        :root {
+            --white:       #ffffff;
+            --off-white:   #f8fafc;
+            --ice:         #daeaf5;
+            --pale-blue:   #b8d9ef;
+            --mid-blue:    #7ab3d4;
+            --deep-blue:   #3a7fa8;
+            --text:        #1e2b35;
+            --text-mid:    #4a6070;
+            --text-dim:    #8ba5b5;
+            --border:      #d0e5f0;
+            --mono:        'DM Mono', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            background: var(--white);
+            color: var(--text);
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 16px;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* ── SNOW HALFTONE SIDES ── */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            width: 180px;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::before {
+            left: 0;
+            background:
+                    radial-gradient(ellipse 160px 120px at 40px calc(100vh - 10px), rgba(184,217,239,0.55) 0%, transparent 100%),
+                    radial-gradient(ellipse 100px 60px at 20px calc(100vh - 5px), rgba(218,234,245,0.7) 0%, transparent 100%),
+                    linear-gradient(to right, rgba(218,234,245,0.28) 0%, rgba(218,234,245,0.06) 60%, transparent 100%);
+            background-repeat: no-repeat, no-repeat, no-repeat;
+        }
+
+        body::after {
+            right: 0;
+            background:
+                    radial-gradient(ellipse 160px 120px at 140px calc(100vh - 10px), rgba(184,217,239,0.55) 0%, transparent 100%),
+                    radial-gradient(ellipse 100px 60px at 160px calc(100vh - 5px), rgba(218,234,245,0.7) 0%, transparent 100%),
+                    linear-gradient(to left, rgba(218,234,245,0.28) 0%, rgba(218,234,245,0.06) 60%, transparent 100%);
+            background-repeat: no-repeat, no-repeat, no-repeat;
+        }
+
+        /* ── LAYOUT ── */
+        .page {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ── HEADER ── */
+        header {
+            padding: 5rem 0 3rem;
+            border-bottom: 1.5px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .header-label {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--mid-blue);
+            margin-bottom: 1.2rem;
+        }
+
+        h1.title {
+            font-family: 'Lora', Georgia, serif;
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            font-weight: 600;
+            line-height: 1.15;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        h1.title em {
+            font-style: italic;
+            color: var(--deep-blue);
+        }
+
+        .subtitle {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--text-mid);
+            margin-bottom: 2rem;
+        }
+
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        .meta-row a {
+            color: var(--deep-blue);
+            text-decoration: none;
+            border-bottom: 1px solid var(--pale-blue);
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .meta-row a:hover {
+            color: var(--mid-blue);
+            border-color: var(--mid-blue);
+        }
+
+        /* ── VIDEO EMBED ── */
+        .video-block {
+            margin: 2.5rem 0;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--off-white);
+        }
+
+        .video-block iframe,
+        .video-block video {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16/9;
+        }
+
+        .video-caption {
+            padding: 0.75rem 1rem;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── SECTION STRUCTURE ── */
+        section {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        .section-tag {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mid-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-tag::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        h2 {
+            font-family: 'Lora', serif;
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1.2rem;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-family: 'Lora', serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            font-style: italic;
+            color: var(--deep-blue);
+            margin: 2rem 0 0.6rem;
+        }
+
+        p {
+            margin-bottom: 1.1rem;
+            color: var(--text);
+        }
+
+        /* ── IMAGE AREAS ── */
+        .img-slot {
+            background: var(--off-white);
+            border: 1.5px dashed var(--pale-blue);
+            border-radius: 6px;
+            padding: 2rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            color: var(--text-dim);
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+        }
+
+        .img-slot img {
+            max-width: 100%;
+            border-radius: 4px;
+            display: block;
+            margin: 0 auto 0.75rem;
+        }
+
+        .img-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+
+        .img-grid .img-slot {
+            margin: 0;
+        }
+
+        figure {
+            margin: 1.5rem 0;
+        }
+
+        figure img {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+
+        figcaption {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-align: center;
+            margin-top: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── CONTRIBUTOR CARDS ── */
+        .contrib-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .contrib-card {
+            background: var(--off-white);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 1.25rem 1.4rem;
+            border-top: 3px solid var(--pale-blue);
+        }
+
+        .contrib-name {
+            font-family: 'Lora', serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 0.2rem;
+        }
+
+        .contrib-email {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            margin-bottom: 0.75rem;
+        }
+
+        .contrib-body {
+            font-size: 0.9rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+        }
+
+        /* ── REFERENCES ── */
+        ol.refs {
+            counter-reset: ref;
+            list-style: none;
+            padding: 0;
+        }
+
+        ol.refs li {
+            counter-increment: ref;
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-mid);
+        }
+
+        ol.refs li::before {
+            content: '[' counter(ref) ']';
+            position: absolute;
+            left: 0;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--mid-blue);
+            top: 0.15rem;
+        }
+
+        ol.refs a {
+            color: var(--deep-blue);
+            text-decoration: none;
+            border-bottom: 1px solid var(--pale-blue);
+        }
+
+        /* ── INLINE CODE ── */
+        code {
+            font-family: var(--mono);
+            font-size: 0.82em;
+            background: var(--ice);
+            color: var(--deep-blue);
+            padding: 0.1em 0.4em;
+            border-radius: 3px;
+        }
+
+        /* ── CALLOUT ── */
+        .callout {
+            background: var(--off-white);
+            border-left: 3px solid var(--mid-blue);
+            padding: 1rem 1.4rem;
+            margin: 1.5rem 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .callout p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-mid);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 3rem 0;
+            text-align: center;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            letter-spacing: 0.1em;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        /* ── SNOWFLAKE DIVIDER ── */
+        .snow-divider {
+            text-align: center;
+            color: var(--pale-blue);
+            font-size: 1rem;
+            letter-spacing: 1rem;
+            margin: 0.5rem 0;
+            user-select: none;
+        }
+
+        @media (max-width: 640px) {
+            body::before, body::after { width: 60px; }
+            .img-grid { grid-template-columns: 1fr; }
+            .contrib-grid { grid-template-columns: 1fr; }
+            .meta-row { gap: 1rem; }
         }
     </style>
 </head>
+
+
+
+	
 <body>
-    <h1>Project 1</h1>
-    Hi
+<div class="page">
+	<header>
+        <p class="header-label"><a href="https://vlissomar.github.io/">Index</a></p>
+		<h1 class="title">Project 1</h1>
+		<p class="subtitle">Images of the Russian Empire</p>
+	</header>
+    &emsp;In this project, I used image processing ideas taught in class to merge the three color channels in the digitized Prokudin-Gorskii glass plate images into one colorized image. In particular, important ideas were extracting features from pixels, Gaussian filters and antialiasing, and image pyramids (which I thought was pretty cool after orking with mip maps in graphics!).
+    <h3>Part 1: Single-Scale Alignment on Low-Res Images</h3>
+
+	<div class="img-grid">
+            <div class="img-slot">
+				  <img src="cathedral_single.jpg"/>
+				  <figcaption>R: (3, -4) | G: (2, -3)</figcaption>
+            </div>
+            <div class="img-slot">
+				  <img src="monastery_single.jpg"/>
+				  <figcaption>R: (3, -5) | G: (3, -5)</figcaption>
+            </div>
+            <div class="img-slot">
+				  <img src="tobolsk_single.jpg"/>
+				  <figcaption>R: (3, -5) | G: (3, -3)</figcaption>
+            </div>
+    </div>
+
+	&emsp;I actually overcomplicated this part a lot. My first implementation, I padded a border of 0s the width of the displacement window, because I assumed it would be very bad if the image wrapped around. I got it to not only work, but work (what I thought believed to be) very well with the images I was working with, and assumed that minor artifacts within a couple pixels was due to the use of heuristics. Evidently, that's not entirely true, as even though the first couple of .tif files worked fine, others tried to shift the color channel off entirely. <br>
+    &emsp;My current implementation just lets the pixels roll right around the edges to the other side, and computes similarity on a centered rectangle of pixels in the middle. Though our scoring heuristic may rate it to be relatively more similar on account of things like color palette or repetitive textures like tiles/grass, this border will have relatively small weight or even no weight.
+    &emsp; Here, I also included a lazy brute force border detection pre-processing; before the change to not padding, this was very necessary to aligning for some reason. From each side, I pick a middle row or column, then march towards the center until the value of the next pixel is noticably different from the average. After averaging these estimates, I chop off a border of that size from the combined 3-channel image before splitting for processing.
+    
+    <h3>Part 2: Acceleration Structure--Image Pyramids</h3>
+
+	<div class="img-grid">
+            <div class="img-slot">
+				  <img src="doe_close.png"/>
+				  <figcaption>close up</figcaption>
+            </div>
+            <div class="img-slot">
+				  <img src="doe_far.png"/>
+				  <figcaption>zoomed in</figcaption>
+            </div>
+    </div>
+    &emsp;The tif files are much larger, which makes it very costly in time to align. That's where multi-scale image pyramids come in. Starting from the original image, I downsample by a factor of 2. To prevent aliasing, a Gaussian blur must be applied so that each pixel sampled represents not just itself, but the pixels around it that were discarded. I took the liberty of using scipy's 2D convolution function in this part. Iterative downsampling is also convenient in that the same Gaussian kernel can be reused to get to the next level. I also made some helper functions to set a good max level for the pyramid.
+    &emsp;To use this acceleration structure, we start from the highest level and run the single-scale alignment algorithm to find the offset. Again, each pixel at the coarse level represents many pixels at the fine level, so it speeds up our search within a displacement window significantly by covering more area. Scale the offset up and accumulate it as we move to finer levels, until it can be directly applied to the original image for alignment. 
+    &emsp; Another thing to note is that as long as more pyramid levels can be made (within reason), the more the displacement window can be minimized, which tends to mean less matrix calculations. I can reliably run my program under a minute, and often, it takes only half that time when using a displacement window of [-5, 5]. 
+	
+    <p class="section-tag">03 &nbsp; Results</p>
+        <h3>Image Gallery</h3>
+
+        &emsp;Behold!<section>
+
+        <div class="img-grid">
+            <div class="img-slot">
+                <img src="cathedral_out.jpg"/>
+            </div>
+            <div class="img-slot">
+                <img src="church_out.jpg"/>
+            </div>
+        </div>
+
+        <div class="img-grid">
+            <div class="img-slot">
+                <img src="harvesters_out.jpg"/>
+            </div>
+            <div class="img-slot">
+                <img src="icon_out.jpg"/>
+            </div>
+        </div>
+        <div class="img-grid">
+            <div class="img-slot">
+                <img src="ilemselga_out.jpg"/>
+            </div>
+            <div class="img-slot">
+                <img src="melons_out.jpg"/>
+            </div>
+        </div>
+        <div class="img-grid">
+            <div class="img-slot">
+                <img src="monastery_out.jpg"/>
+            </div>
+            <div class="img-slot">
+                <img src="religous_painting_out.jpg"/>
+            </div>
+        </div>
+        <div class="img-grid">
+            <div class="img-slot">
+                <img src="self_portrait_out.jpg"/>
+            </div>
+            <div class="img-slot">
+                <img src="siren_out.jpg"/>
+            </div>
+        </div>
+        <div class="img-grid">
+            <div class="img-slot">
+                <img src="three_generations_out.jpg"/>
+            </div>
+            <div class="img-slot">
+                <img src="tobolsk_out.jpg"/>
+            </div>
+        </div>
+        <div class="img-grid">
+            <div class="img-slot">
+                <img src="wharf_out.jpg"/>
+            </div>
+            <div class="img-slot">
+                <img src="dog_out.jpg"/>
+            </div>
+        </div>
+        <div class="img-grid">
+            <div class="img-slot">
+                <img src="interior_out.jpg"/>
+            </div>
+            <div class="img-slot">
+                <img src="train_out.jpg"/>
+            </div>
+        </div>
+    </section>
+    
+<section>
+	Credit goes to Allena Olgvie for the prettiness of this page, who originally used this style on a different group project we did
+</section>
+
+<footer>
+        CS180 &nbsp;·&nbsp; Fall 2026 &nbsp;·&nbsp; Sophia Liu &nbsp;·&nbsp; UC Berkeley
+    </footer>
+</div>
 </body>
 </html>
