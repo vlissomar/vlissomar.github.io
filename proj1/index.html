@@ -210,55 +210,64 @@
         }
 
         /* ── IMAGE AREAS ── */
-        .img-slot {
-            background: var(--off-white);
-            border: 1.5px dashed var(--pale-blue);
-            border-radius: 6px;
-            padding: 2rem;
-            text-align: center;
-            margin: 1.5rem 0;
-            color: var(--text-dim);
-            font-family: var(--mono);
-            font-size: 0.75rem;
-            letter-spacing: 0.08em;
-        }
-
-        .img-slot img {
-            max-width: 100%;
-            border-radius: 4px;
-            display: block;
-            margin: 0 auto 0.75rem;
-        }
-
-        .img-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-            margin: 1.5rem 0;
-        }
-
-        .img-grid .img-slot {
-            margin: 0;
-        }
-
-        figure {
-            margin: 1.5rem 0;
-        }
-
-        figure img {
-            width: 100%;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-        }
-
-        figcaption {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            text-align: center;
-            margin-top: 0.5rem;
-            letter-spacing: 0.05em;
-        }
+		.img-slot {
+		  background: var(--off-white);
+		  border: 1.5px dashed var(--pale-blue);
+		  border-radius: 6px;
+		  padding: 2rem;
+		  text-align: center;
+		  margin: 1.5rem 0;
+		  color: var(--text-dim);
+		  font-family: var(--mono);
+		  font-size: 0.75rem;
+		  letter-spacing: 0.08em;
+		}
+		
+		.img-slot img {
+		  max-width: 100%;
+		  border-radius: 4px;
+		  display: block;
+		  margin: 0 auto 0.75rem;
+		}
+		
+		.img-grid {
+		  display: grid;
+		  grid-template-columns: 1fr 1fr;
+		  gap: 1.2rem;
+		  margin: 1.5rem 0;
+		}
+		
+		.img-grid .img-slot {
+		  margin: 0;
+		}
+		
+		/* ── MODIFIED SECTION FOR 3 AND 4 COLUMN GRIDS ── */
+		.img-grid-3, .img-grid-4 {
+		  display: grid;
+		  gap: 1.2rem;
+		  margin: 1.5rem 0;
+		  background: var(--off-white);
+		  border: 1.5px dashed var(--pale-blue);
+		  border-radius: 6px;
+		  padding: 1.5rem; /* Adds breathing room between the outer dashed box and the images */
+		}
+		
+		.img-grid-3 {
+		  grid-template-columns: repeat(3, 1fr);
+		}
+		
+		.img-grid-4 {
+		  grid-template-columns: repeat(4, 1fr);
+		}
+		
+		/* Strip the outer box styles from individual slots when nested inside 3 or 4 grids */
+		.img-grid-3 .img-slot, .img-grid-4 .img-slot {
+		  margin: 0;
+		  padding: 0;
+		  background: transparent;
+		  border: none;
+		  border-radius: 0;
+		}
 
         /* ── CONTRIBUTOR CARDS ── */
         .contrib-grid {
