@@ -920,8 +920,70 @@
 		</div>
 		&emsp;Gaussian and Laplacian stacks are actually quite straightforward, especially since there's no down/upsampling involved like in pyramids. The difference between each level of Gaussian is a power of two on the σ used to blur them. G(0) would be blended with σ = 2^0 = 1, G(1) has σ = 2^1 = 2, and so on. Laplacians are even easier. L(i) = G(i) - G(i + 1), except for the last one, for which L(i) = G(i).
 		<h3>2.4: Multiresolution Blending (A.K.A. The Oraple!)</h3>
-		&emsp;Now that we've acquired our Laplacian stacks, we can use them to smoothly blend together different images. In order to do so, a mask indicating the seam where the two images will be spliced together is needed. On the mask, we compute a Gaussian stack, and use the values as weights when blending. Essentially, we have L_blend[i] = L_A[i] * (1 - M[i]) + L_B[i] * M[i], where i is the level in the stack, M is the mask, and L_A, L_B are the Laplacian stacks of image A and image B. The * symbol only means elementwise multiplication, not convolution. Lastly, we find the resulting blended image summing all levels for L_blend
+		&emsp;Now that we've acquired our Laplacian stacks, we can use them to smoothly blend together different images. In order to do so, a mask indicating the seam where the two images will be spliced together is needed. On the mask, we compute a Gaussian stack, and use the values as weights when blending. Essentially, we have L_blend[i] = L_A[i] * (1 - M[i]) + L_B[i] * M[i], where i is the level in the stack, M is the mask, and L_A, L_B are the Laplacian stacks of image A and image B. The * symbol only means elementwise multiplication, not convolution. Lastly, we find the resulting blended image summing all levels for L_blend.
+		
+		<h4>Recreating 3.42, (a-l)</h4>
 
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+				<tr>
+					<td style="text-align: center;">
+						<img src="2_4_appleorange_laplace_im1_mask0.png"/>
+						<figcaption>apple * (1 - mask), l = 0</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="2_4_appleorange_laplace_im2_mask0.png"/>
+						<figcaption>orange * mask, l = 0</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="2_4_appleorange_laplace0.png"/>
+						<figcaption>blend, l = 0</figcaption>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="2_4_appleorange_laplace_im1_mask2.png"/>
+						<figcaption>apple * (1 - mask), l = 2</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="2_4_appleorange_laplace_im2_mask2.png"/>
+						<figcaption>orange * mask, l = 2</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="2_4_appleorange_laplace2.png"/>
+						<figcaption>blend, l = 2</figcaption>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="2_4_appleorange_laplace_im1_mask4.png"/>
+						<figcaption>apple * (1 - mask), l = 4</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="2_4_appleorange_laplace_im2_mask4.png"/>
+						<figcaption>orange * mask, l = 4</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="2_4_appleorange_laplace4.png"/>
+						<figcaption>blend, l = 4</figcaption>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align: center;">
+						<img src="2_4_appleorange_im1_mask.png"/>
+						<figcaption>apple * (1 - mask), l = 0</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="2_4_appleorange_im2_mask.png"/>
+						<figcaption>orange * mask, l = 0</figcaption>
+					</td>
+					<td style="text-align: center;">
+						<img src="2_4_appleorange_blend.png"/>
+						<figcaption>blend, l = 0</figcaption>
+					</td>
+				</tr>
+			</table>
+		</div>
 
 <footer>
 	Credit goes to Allena Olgvie for the page's CSS style sheet I borrowed from a different group project together
