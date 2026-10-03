@@ -72,22 +72,29 @@
             margin: 0 auto;
             padding: 0 2rem;
         }
-        /* ── STUFF I ADDED ── */
+		/* ── STUFF I ADDED ── */
 		.container {
-			display: flex;
-			align-items: center; /* Vertically centers the text and image */
-			gap: 20px; /* Adds space between the text and the image */
+		    display: flex;
+		    align-items: center; /* Vertically centers the text and image */
+		    gap: 20px;           /* Adds space between the text and the image */
+		    margin: 1.5rem 0;    /* Matches the vertical spacing of your other image areas */
 		}
 		
+		/* Force both the text block and image wrapper to share equal width */
 		.container > * {
-		  	flex: 1; /* Forces child elements to share equal width */
+		    flex: 1;
+		    min-width: 0;        /* Prevents layout blowouts from long strings or large files */
 		}
 		
-		/* Optional: ensure images scale nicely inside their flexible container */
+		/* Force the image to fluidly fill its half of the container */
 		.container img {
-		  	width: 100%;
-		  	height: auto;
+		    width: 100%;
+		    height: auto;
+		    display: block;
+		    border-radius: 6px;  /* Matches your stylesheet's figure img styling */
+		    border: 1px solid var(--border); /* Matches your stylesheet's figure img styling */
 		}
+
 
 
         /* ── HEADER ── */
