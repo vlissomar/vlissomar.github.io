@@ -445,11 +445,11 @@
 		&emsp;For both 2D convolution implementations, I preprocess by flipping the kernel and finding a ‘center’ pixel location. Then, I iterate over the output matrix to fill in values.
 		<div class="img-grid">
 	            <div class="img-slot">
-					  <img src="4_loops.jpg"/>
+					  <img src="4_loops.png"/>
 					  <figcaption>In the 4 for-loop version, the outer two loops cover the pixels of the output matrix, while the inner two loops iterate over the kernel, checking if each position is valid before accumulating values. </figcaption>
 	            </div>
 	            <div class="img-slot">
-					  <img src="2_loops.jpg"/>
+					  <img src="2_loops.png"/>
 					  <figcaption>In the 2 for-loop version, I would preprocess the input image matrix (not the kernel) by padding, then slice into the padded matrix to do element-wise multiplication. </figcaption>
 	            </div>
 	    </div>
