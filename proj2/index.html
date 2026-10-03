@@ -918,11 +918,13 @@
 				</tr>
 			</table>
 		</div>
+		&emsp;Gaussian and Laplacian stacks are actually quite straightforward, especially since there's no down/upsampling involved like in pyramids. The difference between each level of Gaussian is a power of two on the σ used to blur them. G(0) would be blended with σ = 2^0 = 1, G(1) has σ = 2^1 = 2, and so on. Laplacians are even easier. L(i) = G(i) - G(i + 1), except for the last one, for which L(i) = G(i).
 		<h3>2.4: Multiresolution Blending (A.K.A. The Oraple!)</h3>
+		&emsp;Now that we've acquired our Laplacian stacks, we can use them to smoothly blend together different images. In order to do so, a mask indicating the seam where the two images will be spliced together is needed. On the mask, we compute a Gaussian stack, and use the values as weights when blending. Essentially, we have L_blend[i] = L_A[i] * (1 - M[i]) + L_B[i] * M[i], where i is the level in the stack, M is the mask, and L_A, L_B are the Laplacian stacks of image A and image B. The * symbol only means elementwise multiplication, not convolution. Lastly, we find the resulting blended image summing all levels for L_blend
 
 
 <footer>
-	Credit goes to Allena Olgvie for the prettiness of this page, who originally used this style on a different group project we did 
+	Credit goes to Allena Olgvie for the page's CSS style sheet I borrowed from a different group project together
 	<br>
 	CS180 &nbsp;·&nbsp; Fall 2026 &nbsp;·&nbsp; Sophia Liu &nbsp;·&nbsp; UC Berkeley
 </footer>
