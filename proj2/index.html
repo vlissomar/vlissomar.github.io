@@ -74,9 +74,19 @@
         }
         /* ── STUFF I ADDED ── */
 		.container {
-  			display: flex;
-  			align-items: center; /* Vertically centers the text and image */
-  			gap: 20px;           /* Adds space between the text and the image */
+			display: flex;
+			align-items: center; /* Vertically centers the text and image */
+			gap: 20px; /* Adds space between the text and the image */
+		}
+		
+		.container > * {
+		  	flex: 1; /* Forces child elements to share equal width */
+		}
+		
+		/* Optional: ensure images scale nicely inside their flexible container */
+		.container img {
+		  	width: 100%;
+		  	height: auto;
 		}
 
 
