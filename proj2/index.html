@@ -486,7 +486,7 @@
 			</div>
 		</div>
 		&emsp;Each of the finite difference filters essentially computing partial derivatives, and make up the gradient. To find the magnitude of the gradient, we take the square_root(sum(squared(partial derivatives))). 
-		<div class="img-grid-3">
+		<div class="img-grid-4">
 			<div class="img-slot">
 				<img src="1_2_cameraman_grad.png"/>
 				<figcaption>I: 540 x 542</figcaption>
@@ -514,7 +514,8 @@
 		</div>
 		&emsp;The derivative of Gaussian filters can be quickly found by convolving the Gaussian with the D_x and D_y filters.
 
-		
+		<br>
+		<p style="text-align: center;">(I * G) * D_xy vs I * (G * D_xy)</p>
 		<div class="img-slot">
 			  <img src="cameraman.png"/>
 			  <figcaption>start! image I</figcaption>
@@ -524,11 +525,18 @@
 				  <img src="1_3_cameraman_gauss_blur.png"/>
 				  <figcaption>I * G</figcaption>
             </div>
-            <div class="img-slot">
-				  <img src="DoG_x.png"/>
-				  <figcaption>DoG_x = G * Dx</figcaption>
-            </div>
-    </div>
+			
+			<div class="img-grid">
+	            <div class="img-slot">
+					  <img src="DoG_x.png"/>
+					  <figcaption>DoG_x = G * Dx</figcaption>
+	            </div>
+	            <div class="img-slot">
+					  <img src="DoG_y.png"/>
+					  <figcaption>DoG_y = G * Dy</figcaption>
+	            </div>
+			</div>
+		</div>
 		
     </section>
 
