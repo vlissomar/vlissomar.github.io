@@ -606,42 +606,39 @@
 	<section>
 		<p class="section-tag">02 &nbsp; Applications</p>
 		<h3>2.1: Image "Sharpening"</h3>
-		<div class="img-grid-3">
+		
+		<div class="img-grid">
 	        <div class="img-slot">
 				  <img src="taj.jpg"/>
 				  <figcaption>Taj Mahal</figcaption>
 			</div>
 	        <div class="img-slot">
-				  <img src="2_1_taj_details.png"/>
-				  <figcaption>I - G * I</figcaption>
-			</div>
-	        <div class="img-slot">
-				  <img src="2_1_taj_sharp3.png"/>
-				  <figcaption>sharp, a = 3</figcaption>
-			</div>
-		</div>
-		
-		<div class="img-slot">
-			<img src="temple_of_saturn_blur.png"/>
-			<figcaption>Temple of Saturn</figcaption>
-		</div>
-		<div class="img-grid-3">
-	        <div class="img-slot">
 				  <img src="2_1_temple_of_saturn_blur.png"/>
-				  <figcaption>blurred</figcaption>
+				  <figcaption>Temple of Saturn (blurred)</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_1_taj_details.png"/>
+				  <figcaption>details</figcaption>
 			</div>
 	        <div class="img-slot">
 				  <img src="2_1_temple_of_saturn_details.png"/>
 				  <figcaption>details</figcaption>
 			</div>
 	        <div class="img-slot">
+				  <img src="2_1_taj_sharp3.png"/>
+				  <figcaption>sharp, a = 3</figcaption>
+			</div>
+	        <div class="img-slot">
 				  <img src="2_1_temple_of_saturn_sharp3.png"/>
 				  <figcaption>sharp, a = 3</figcaption>
 			</div>
 		</div>
+
 		&emsp; A blur filter is a low-pass filter that removes high frequencies. When subtracting blur(img) from img, only high frequencies, details, remain. If these high frequencies are once again overlain on top of the image, a ‘sharpening’ effect is made. 
 		
-		<div class="img-grid-3">
+		
+		
+		<div class="img-grid">
 	        <div class="img-slot">
 				  <img src="2_1_temple_of_saturn_sharp1.png"/>
 				  <figcaption>a = 1</figcaption>
@@ -654,8 +651,6 @@
 				  <img src="2_1_temple_of_saturn_sharp3.png"/>
 				  <figcaption>a = 3</figcaption>
 			</div>
-		</div>
-		<div class="img-grid-3">
 	        <div class="img-slot">
 				  <img src="2_1_temple_of_saturn_sharp4.png"/>
 				  <figcaption>a = 4</figcaption>
@@ -669,10 +664,129 @@
 				  <figcaption>a = 8</figcaption>
 			</div>
 		</div>
+		<div class="img-slot">
+			<img src="temple_of_saturn.png"/>
+			<figcaption>Temple of Saturn (original)</figcaption>
+		</div>
+		<div class="img-slot">
+			<img src="temple_of_saturn_alpha.gif"/>
+			<figcaption>.gif cycling through a = 1...10</figcaption>
+		</div>
 	
-		&emsp;As can be seen, alpha is proportional to the sharpening. As alpha becomes too large, however, there seems to be a bit of overexposure like effect, especially when examining the small rocky surfaces on the right side. At lower alpha, these matte highlights of the yellow rock/wall are still yellow, but at higher alpha, they look closer to white. This may be due to implementation, as currently I clip values that exceed the desired range, as opposed to rescaling the image.
+		&emsp;As can be seen, alpha is proportional to the sharpening. As alpha becomes too large, however, there seems to be a bit of overexposure-like effect, especially when examining the small rocky surfaces on the right side. At lower alpha, these matte highlights of the yellow rock/wall are still yellow, but at higher alpha, they look closer to white. This may be due to implementation, as currently I clip values that exceed the desired range, as opposed to rescaling the image.
 		
 		<h3>2.2: Hybrid Images</h3>
+		Behold!
+		<div class="img-grid-3">
+	        <div class="img-slot">
+				  <img src="DerekPicture.jpg"/>
+				  <figcaption>Derek</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="nutmeg.jpg"/>
+				  <figcaption>Nutmeg</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_2_DerekPicture_nutmeg.png"/>
+				  <figcaption>Derek + Nutmeg</figcaption>
+			</div>
+		</div>
+		<div class="img-grid-3">
+	        <div class="img-slot">
+				  <img src="panda.jpg"/>
+				  <figcaption>panda</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="tiger.jpg"/>
+				  <figcaption>tiger</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger.png"/>
+				  <figcaption>panda + tiger</figcaption>
+			</div>
+		</div>
+		<div class="img-grid-3">
+	        <div class="img-slot">
+				  <img src="swan.jpg"/>
+				  <figcaption>swan</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="horse.jpg"/>
+				  <figcaption>horse</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_2_swan_horse.png"/>
+				  <figcaption>swan + horse</figcaption>
+			</div>
+		</div>
+		&emsp;As directed in the specs, first, the images need to be aligned. Then, I would remove the high frequencies from the first image, and the low frequencies from the other. As earlier, extracting low frequencies uses a Gaussian blur, and extracting high frequencies comes from subtracting away low frequencies. Combining the filtered images, we can get the hybrid images.
+		<h4>Walkthrough!</h4>
+		<div class="img-grid">
+			<figcaption>input</figcaption>
+	        <div class="img-slot">
+				  <img src="panda.jpg"/>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger_im1_FFT.png"/>
+			</div>
+		</div>
+		<div class="img-grid">
+	        <div class="img-slot">
+				  <img src="tiger.jpg"/>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger_im2_FFT.png"/>
+			</div>
+		</div>
+		<div class="img-grid">
+			<figcaption>align</figcaption>
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger_aligned_im1.png"/>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger_aligned_im1_FFT.png"/>
+			</div>
+		</div>
+		<div class="img-grid">
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger_aligned_im2.png"/>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger_aligned_im2_FFT.png"/>
+			</div>
+		</div>
+		&emsp;It’s interesting to see how the image alignment affects the FFTs. The panda gets rotated, and that can be seen in the FFT. I suspect the vertical/horizontal lines are due to the border of the image, so when the image is zero filled upon rotating, there still remains a sharp edge that the FFT copies and rotates with it.  It’s more difficult to see how FFT changes for the tiger, which gets a zoom out. The corresponding effect in the Fourier domain should be a zoom in, but because of a lack of distinctive points on the Fourier, I can’t quite verify that is the case.
+		<div class="img-grid">
+			<figcaption>filter: low freq</figcaption>
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger_lo.png"/>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger_lo_FFT.png"/>
+			</div>
+		</div>
+		<div class="img-grid">
+			<figcaption>filter: high freq</figcaption>
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger_hi.png"/>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger_hi_FFT.png"/>
+			</div>
+		</div>
+		&emsp;During the filter stage, the FFT clearly drops high frequencies for the low-pass, which appears as a white cross. On the other hand, the high-pass filtered image’s region of blocked frequencies appears to be just a pixel in size, at the very center. 
+
+		<div class="img-grid">
+			<figcaption>combine => hybrid image!</figcaption>
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger.png"/>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_2_panda_tiger_FFT.png"/>
+			</div>
+		</div>
+		&emsp;The hybrid combines both sets of frequencies, so the FFT is not that distinctive when compared to other images with low and high frequencies, like that of the unaligned input images
+			
 		<h3>2.3: Gaussian and Laplacian Stacks</h3>
 		<h3>2.4: Multiresolution Blending (A.K.A. The Oraple!)</h3>
 
