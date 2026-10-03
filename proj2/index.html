@@ -591,21 +591,87 @@
 		<div class="img-grid">
 			<div class="img-slot">
 				<img src="1_3_cameraman_gauss_grad_bin20.png"/>
-				  <figcaption>t = 20</figcaption>
+				  <figcaption>t = 0.2</figcaption>
 	        </div>
 	        <div class="img-slot">
 				  <img src="1_3_cameraman_DoG_grad_bin20.png"/>
-				  <figcaption>t = 20</figcaption>
+				  <figcaption>t = 0.2</figcaption>
 			</div>
 		</div>
 
-		&emsp;As can be seen, applying two kernel convolutions has the same effect as convolving the two kernels first, then applying the new kernel to the image. The latter is simply more efficient, because kernels tend to be smaller. <br>
+		&emsp;As can be seen, applying two kernel convolutions has the same effect as convolving the two kernels first, then applying the new kernel to the image. The latter is simply more efficient, because kernels tend to be smaller, so convolution takes less computations. <br>
 		&emsp;Additionally, compared to the previous part, the remaining amount of noise (in the grass) is completely removed by blurring first.
 
     </section>
 	<section>
 		<p class="section-tag">02 &nbsp; Applications</p>
 		<h3>2.1: Image "Sharpening"</h3>
+		<div class="img-grid-3">
+	        <div class="img-slot">
+				  <img src="taj.jpg"/>
+				  <figcaption>Taj Mahal</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_1_taj_details.png"/>
+				  <figcaption>I - G * I</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_1_taj_sharp3.png"/>
+				  <figcaption>sharp, a = 3</figcaption>
+			</div>
+		</div>
+		
+		<div class="img-slot">
+			<img src="temple_of_saturn_blur.png"/>
+			<figcaption>Temple of Saturn</figcaption>
+		</div>
+		<div class="img-grid-3">
+	        <div class="img-slot">
+				  <img src="temple_of_saturn_blur.png"/>
+				  <figcaption>blurred</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_1_temple_of_saturn_details.png"/>
+				  <figcaption>details</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_1_temple_of_saturn_sharp3.png"/>
+				  <figcaption>sharp, a = 3</figcaption>
+			</div>
+		</div>
+		&emsp; A blur filter is a low-pass filter that removes high frequencies. When subtracting blur(img) from img, only high frequencies, details, remain. If these high frequencies are once again overlain on top of the image, a ‘sharpening’ effect is made. 
+		
+		<div class="img-grid-3">
+	        <div class="img-slot">
+				  <img src="2_1_temple_of_saturn_sharp1.png"/>
+				  <figcaption>a = 1</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_1_temple_of_saturn_sharp2.png"/>
+				  <figcaption>a = 2</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_1_temple_of_saturn_sharp3.png"/>
+				  <figcaption>a = 3</figcaption>
+			</div>
+		</div>
+		<div class="img-grid-3">
+	        <div class="img-slot">
+				  <img src="2_1_temple_of_saturn_sharp4.png"/>
+				  <figcaption>a = 4</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_1_temple_of_saturn_sharp6.png"/>
+				  <figcaption>a = 6</figcaption>
+			</div>
+	        <div class="img-slot">
+				  <img src="2_1_temple_of_saturn_sharp8.png"/>
+				  <figcaption>a = 8</figcaption>
+			</div>
+		</div>
+	
+		&emsp;As can be seen, alpha is proportional to the sharpening. As alpha becomes too large, however, there seems to be a bit of overexposure like effect, especially when examining the small rocky surfaces on the right side. At lower alpha, these matte highlights of the yellow rock/wall are still yellow, but at higher alpha, they look closer to white. This may be due to implementation, as currently I clip values that exceed the desired range, as opposed to rescaling the image.
+		
 		<h3>2.2: Hybrid Images</h3>
 		<h3>2.3: Gaussian and Laplacian Stacks</h3>
 		<h3>2.4: Multiresolution Blending (A.K.A. The Oraple!)</h3>
