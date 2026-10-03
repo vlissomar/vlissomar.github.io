@@ -721,8 +721,8 @@
 		</div>
 		&emsp;As directed in the specs, first, the images need to be aligned. Then, I would remove the high frequencies from the first image, and the low frequencies from the other. As earlier, extracting low frequencies uses a Gaussian blur, and extracting high frequencies comes from subtracting away low frequencies. Combining the filtered images, we can get the hybrid images.
 		<h4>Walkthrough!</h4>
+		<figcaption>input</figcaption>
 		<div class="img-grid">
-			<figcaption>input</figcaption>
 	        <div class="img-slot">
 				  <img src="panda.jpg"/>
 			</div>
@@ -738,8 +738,8 @@
 				  <img src="2_2_panda_tiger_im2_FFT.png"/>
 			</div>
 		</div>
+		<figcaption>align</figcaption>
 		<div class="img-grid">
-			<figcaption>align</figcaption>
 	        <div class="img-slot">
 				  <img src="2_2_panda_tiger_aligned_im1.png"/>
 			</div>
@@ -756,8 +756,9 @@
 			</div>
 		</div>
 		&emsp;It’s interesting to see how the image alignment affects the FFTs. The panda gets rotated, and that can be seen in the FFT. I suspect the vertical/horizontal lines are due to the border of the image, so when the image is zero filled upon rotating, there still remains a sharp edge that the FFT copies and rotates with it.  It’s more difficult to see how FFT changes for the tiger, which gets a zoom out. The corresponding effect in the Fourier domain should be a zoom in, but because of a lack of distinctive points on the Fourier, I can’t quite verify that is the case.
+		
+		<figcaption>filter: low freq</figcaption>
 		<div class="img-grid">
-			<figcaption>filter: low freq</figcaption>
 	        <div class="img-slot">
 				  <img src="2_2_panda_tiger_lo.png"/>
 			</div>
@@ -765,8 +766,8 @@
 				  <img src="2_2_panda_tiger_lo_FFT.png"/>
 			</div>
 		</div>
+		<figcaption>filter: high freq</figcaption>
 		<div class="img-grid">
-			<figcaption>filter: high freq</figcaption>
 	        <div class="img-slot">
 				  <img src="2_2_panda_tiger_hi.png"/>
 			</div>
@@ -776,8 +777,8 @@
 		</div>
 		&emsp;During the filter stage, the FFT clearly drops high frequencies for the low-pass, which appears as a white cross. On the other hand, the high-pass filtered image’s region of blocked frequencies appears to be just a pixel in size, at the very center. 
 
+		<figcaption>combine => hybrid image!</figcaption>
 		<div class="img-grid">
-			<figcaption>combine => hybrid image!</figcaption>
 	        <div class="img-slot">
 				  <img src="2_2_panda_tiger.png"/>
 			</div>
