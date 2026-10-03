@@ -72,6 +72,13 @@
             margin: 0 auto;
             padding: 0 2rem;
         }
+        /* ── STUFF I ADDED ── */
+		.container {
+  			display: flex;
+  			align-items: center; /* Vertically centers the text and image */
+  			gap: 20px;           /* Adds space between the text and the image */
+		}
+
 
         /* ── HEADER ── */
         header {
@@ -240,6 +247,28 @@
         .img-grid .img-slot {
             margin: 0;
         }
+		
+		.img-grid-3 {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+  			gap: 1.2rem;
+  			margin: 1.5rem 0;
+			}
+		
+		.img-grid-3 .img-slot {
+  			margin: 0;
+		}
+		
+		.img-grid-4 {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+  			gap: 1.2rem;
+  			margin: 1.5rem 0;
+			}
+		
+		.img-grid-3 .img-slot {
+  			margin: 0;
+		}
 
         figure {
             margin: 1.5rem 0;
@@ -379,6 +408,8 @@
         @media (max-width: 640px) {
             body::before, body::after { width: 60px; }
             .img-grid { grid-template-columns: 1fr; }
+            .img-grid-3 { grid-template-columns: 1fr; }
+            .img-grid-4 { grid-template-columns: 1fr; }
             .contrib-grid { grid-template-columns: 1fr; }
             .meta-row { gap: 1rem; }
         }
@@ -396,39 +427,119 @@
 		<p class="subtitle">Fun with Filters and Frequencies</p>
 	</header>
 
-    This project compares some of the visual effects of zoom as opposed to physical distance from the scene in photography.
-    <h3>Part 1: Selfies</h3>
+    This project focuses on image filtering, from the how-to, like convolution, to applications, like extracting and manipulate low and high frequencies in images, and evventually image blending.
 
-	<div class="img-grid">
-            <div class="img-slot">
-				  <img src="selfie_close.JPG"/>
-				  <figcaption>close up</figcaption>
+	<section>
+		<p class="section-tag">01 &nbsp; Filters and Edges</p>
+		<h2>1.1: Convolutions from Scratch!</h2>
+		&mbsp;For both 2D convolution implementations, I preprocess by flipping the kernel and finding a ‘center’ pixel location. Then, I iterate over the output matrix to fill in values.
+		<div class="img-grid">
+	            <div class="img-slot">
+					  <img src="4_loops.jpg"/>
+					  <figcaption>In the 4 for-loop version, the outer two loops cover the pixels of the output matrix, while the inner two loops iterate over the kernel, checking if each position is valid before accumulating values. </figcaption>
+	            </div>
+	            <div class="img-slot">
+					  <img src="2_loops.jpg"/>
+					  <figcaption>In the 2 for-loop version, I would preprocess the input image matrix (not the kernel) by padding, then slice into the padded matrix to do element-wise multiplication. </figcaption>
+	            </div>
+	    </div>
+		<div class="container">
+			<p>&mbsp;Boundaries are handled by padding with zero fill values, as specified by the specs. In the 4 for-loop version, any pixel that would be in the padding zone is simply ignored as out of bounds, while in the 2 for-loop version, the matrix slice includes an actual padding of zeroes. <br>
+		&mbsp;Regarding runtime, the 4 for-loop version is the one with the worse performance, taking seconds each call. On the other hand, the 2 for-loop version and scipy implementations spend less than a tenth of a second, with the scipy almost halving the 2 for-loop implementation. The lines of ‘True True True’ are from checks with np.allclose(...) comparing the results of convolution. scipy’s convolve2d uses mode=‘same’ and has zero padding by default.</p>
+			<img src="runtime.png">
+		</div>
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="selfie.jpg"/>
+				<figcaption>I: 480 x 640</figcaption>
             </div>
             <div class="img-slot">
-				  <img src="selfie_zoom.png"/>
-				  <figcaption>zoomed in</figcaption>
+				<img src="1_1_selfie_boxblur.png"/>
+				<figcaption>box blurred</figcaption>
+			</div>
+		</div>
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="1_1_selfie_Dx.png"/>
+				<figcaption>I * Dx</figcaption>
+            </div>
+            <div class="img-slot">
+				<img src="1_1_selfie_Dy.png"/>
+				<figcaption>I * Dy</figcaption>
+			</div>
+		</div>
+
+		<h2>1.2: Finite Difference Operator</h2>
+		
+		<div class="img-grid-3">
+			<div class="img-slot">
+				<img src="cameraman.png"/>
+				<figcaption>I: 540 x 542</figcaption>
+            </div>
+            <div class="img-slot">
+				<img src="1_2_cameraman_Dx.png"/>
+				<figcaption>I * Dx</figcaption>
+			</div>
+            <div class="img-slot">
+				<img src="1_2_cameraman_Dy.png"/>
+				<figcaption>I * Dy</figcaption>
+			</div>
+		</div>
+		&emsp;Each of the finite difference filters essentially computing partial derivatives, and make up the gradient. To find the magnitude of the gradient, we take the square_root(sum(squared(partial derivatives))). 
+		<div class="img-grid-3">
+			<div class="img-slot">
+				<img src="1_2_cameraman_grad.png"/>
+				<figcaption>I: 540 x 542</figcaption>
+            </div>
+            <div class="img-slot">
+				<img src="1_2_cameraman_grad_bin10.png"/>
+				<figcaption>t = 0.1</figcaption>
+			</div>
+            <div class="img-slot">
+				<img src="1_2_cameraman_grad_bin20.png"/>
+				<figcaption>t = 0.2</figcaption>
+			</div>
+            <div class="img-slot">
+				<img src="1_2_cameraman_grad_bin30.png"/>
+				<figcaption>t = 0.3</figcaption>
+			</div>
+		</div>
+		&emsp;After binarizing the gradient magnitude, I personally preferred the threshold of 0.2 (assuming the image ranges from 0:black to 1:white. Lower thresholds reveal more building detail, but leaves the grass looking very noisy. Higher thresholds make the edge lines appear to disconnect sometimes, which is also undesirable.
+		
+		<h2>1.3: Derivative of Gaussian (DoG) Filter</h2>
+
+		<div class="img-slot">
+			<img src="gauss.png"/>
+			<figcaption>PLACEHOLDER</figcaption>
+		</div>
+		&emsp;The derivative of Gaussian filters can be quickly found by convolving the Gaussian with the D_x and D_y filters.
+
+		
+		<div class="img-slot">
+			  <img src="cameraman.png"/>
+			  <figcaption>start! image I</figcaption>
+        </div>
+		<div class="img-grid">
+            <div class="img-slot">
+				  <img src="1_3_cameraman_gauss_blur.png"/>
+				  <figcaption>I * G</figcaption>
+            </div>
+            <div class="img-slot">
+				  <img src="DoG_x.png"/>
+				  <figcaption>DoG_x = G * Dx</figcaption>
             </div>
     </div>
+		
+    </section>
 
-	In the first photo, the camera is close to the face, and since closer objects appear larger, central features like nose are widened/stretched while others lie ears appear smaller. This effect is less prominent when the camera is held farther away, as the difference in distance from camera to nose and camera to ears is small enough to be negligiable. This is not true for a camera close to the face.
+
+
+
+
+
+
+
 	
-	<!--
-    <div style="display: flex; flex-direction: column; align-items: center;">
-			<table style="width: 100%; text-align: center; border-collapse: collapse;">
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="selfie_close.JPG" width="600px"/>
-				  <figcaption>close up</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="selfie_zoom.png" width="600px"/>
-				  <figcaption>zoomed in</figcaption>
-				</td>
-			  </tr>
-			</table>
-    </div>
-	-->
-    
     <h3>Part 2: Architectural Perspective Compression</h3>
 
 	<div class="img-grid">
@@ -444,23 +555,6 @@
 
 	Similar to the previous part, the difference in distance between the close and far end of the building is more important when the camera is close to the building. When far from the building, both ends can be considered about equally far, so the entire building shrinks together. 
 
-	<!--
-    <div style="display: flex; flex-direction: column; align-items: center;">
-			<table style="width: 100%; text-align: center; border-collapse: collapse;">
-			  <tr>
-				<td style="text-align: center;">
-				  <img src="doe_close.png" width="600px"/>
-				  <figcaption>close up</figcaption>
-				</td>
-				<td style="text-align: center;">
-				  <img src="doe_far.png" width="600px"/>
-				  <figcaption>zoomed in</figcaption>
-				</td>
-			  </tr>
-			</table>
-    </div>
-	-->
-    
     <h3>Part 3: The Dolly Zoom</h3>
 
 	<div class="img-slot">
@@ -469,18 +563,6 @@
     </div>
 	Note how the tiny cat figurines seem to be approaching Kaito Kid in the center. They reach a relatively similar depth in the scene as the camera backs away.
 
-	<!--
-	<div style="display: flex; flex-direction: column; align-items: center;">
-			<table style="width: 100%; text-align: center; border-collapse: collapse;">
-			  <tr>
-				<td style="text-align: center;">
-					<img src="dolly_zoom.gif" alt="dolly zoom example">
-				    <figcaption>dolly zoom featuring Kaito Kid</figcaption>
-				</td>
-			  </tr>
-			</table>
-    </div>
-	-->
 <section>
 	Credit goes to Allena Olgvie for the prettiness of this page, who originally used this style on a different group project we did
 </section>
