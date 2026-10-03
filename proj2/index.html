@@ -427,12 +427,12 @@
 		<p class="subtitle">Fun with Filters and Frequencies</p>
 	</header>
 
-    This project focuses on image filtering, from the how-to, like convolution, to applications, like extracting and manipulate low and high frequencies in images, and evventually image blending.
+    &emsp;This project focuses on image filtering, from the how-to, like convolution, to applications, like extracting and manipulate low and high frequencies in images, and evventually image blending.
 
 	<section>
 		<p class="section-tag">01 &nbsp; Filters and Edges</p>
 		<h3>1.1: Convolutions from Scratch!</h3>
-		&mbsp;For both 2D convolution implementations, I preprocess by flipping the kernel and finding a ‘center’ pixel location. Then, I iterate over the output matrix to fill in values.
+		&emsp;For both 2D convolution implementations, I preprocess by flipping the kernel and finding a ‘center’ pixel location. Then, I iterate over the output matrix to fill in values.
 		<div class="img-grid">
 	            <div class="img-slot">
 					  <img src="4_loops.jpg"/>
@@ -444,8 +444,8 @@
 	            </div>
 	    </div>
 		<div class="container">
-			<p>&mbsp;Boundaries are handled by padding with zero fill values, as specified by the specs. In the 4 for-loop version, any pixel that would be in the padding zone is simply ignored as out of bounds, while in the 2 for-loop version, the matrix slice includes an actual padding of zeroes. <br>
-		&mbsp;Regarding runtime, the 4 for-loop version is the one with the worse performance, taking seconds each call. On the other hand, the 2 for-loop version and scipy implementations spend less than a tenth of a second, with the scipy almost halving the 2 for-loop implementation. The lines of ‘True True True’ are from checks with np.allclose(...) comparing the results of convolution. scipy’s convolve2d uses mode=‘same’ and has zero padding by default.</p>
+			<p>&emsp;Boundaries are handled by padding with zero fill values, as specified by the specs. In the 4 for-loop version, any pixel that would be in the padding zone is simply ignored as out of bounds, while in the 2 for-loop version, the matrix slice includes an actual padding of zeroes. <br>
+		&emsp;Regarding runtime, the 4 for-loop version is the one with the worse performance, taking seconds each call. On the other hand, the 2 for-loop version and scipy implementations spend less than a tenth of a second, with the scipy almost halving the 2 for-loop implementation. The lines of ‘True True True’ are from checks with np.allclose(...) comparing the results of convolution. scipy’s convolve2d uses mode=‘same’ and has zero padding by default.</p>
 			<img src="runtime.png">
 		</div>
 		<div class="img-grid">
