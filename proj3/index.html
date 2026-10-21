@@ -685,50 +685,118 @@
 	<h2>Part B: Flow Matching from Scratch</h2>
 	<section>
 		<p class="section-tag">01 &nbsp;Training a Single-Step Denoising UNet</p>
-		<h3>1.1: Implementing the UNet</h3>
-		<h3>1.2: Using the UNet to Train a Denoiser</h3>
+		<h3>1.1-2: Implementing the UNet & Using the UNet to Train a Denoiser</h3>
+		&emsp; In this section, we set up the UNet, defining each operation (simple and composed), and using them to construct our layers following the flowchart in the specs. Then, we conduct self-supervised learning, passing in noised images as input. Below are examples of what our noised images should look like, for different σ that are used to interpolate between clean images and noise. 
+		
 	    <div class="img-slot">
 	      <img src="1-2_noisy_images.png"/>
 	    </div>
-		<h3>1.2.1: Training</h3>
-		
-	    <div class="img-slot">
-	      <img src="1-2-1_5epoch_train_loss.png"/>
-	    </div>
-	    <div class="img-slot">
-	      <img src="1-2-1_5epoch_results.png"/>
-	    </div>
+		&emsp; After the model is trained, we can examine the loss at each optimization step, as well as the results of our denoiser for a specific value of σ=0.5.
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="1-2-1_1epoch_train_loss.png"/>
+            </div>
+            <div class="img-slot">
+				<img src="1-2-1_1epoch_results.png"/>
+			</div>
+		</div>
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="1-2-1_5epoch_train_loss.png"/>
+            </div>
+            <div class="img-slot">
+				<img src="1-2-1_5epoch_results.png"/>
+			</div>
+		</div>
+
 		<h3>1.2.2: Out-of-Distribution Testing</h3>
+		&emsp; We can also test our model on σ values outside of its distribution. For the most part, performance appears decent up to σ=0.6.
 	    <div class="img-slot">
 	      <img src="1-2-2_OOD_results.png"/>
 	    </div>
 		<h3>1.2.3: Denoising Pure Noise</h3>
-		&emsp; Generally, each denoised image result looks the exact same, as though all digits are superimposed on each other. This is because the input is completely unrelated to the target digit, so the velocities are sort of blended together, to create this blob.
-	      <img src="1-2-3_5epoch_train_loss.png"/>
-	    </div>
-	    <div class="img-slot">
-	      <img src="1-2-3_5epoch_results.png"/>
-	    </div>
+		&emsp; Now, we try training another model on pure noise. Generally, each denoised image result looks the exact same, as though all digits are superimposed on each other, regardless of the target clean image. If like in the normal scenario (train the model like in 1.2.1), the model sees a noisy image, there will still be features present in the noisy images that hint as to what to do, allowing it to make better predictions. In this scenario, the model never sees anything related to the true image it was trying to predict. As a result, the best prediction the model can make under the MSE error is just the E[x], the average of all the images.
 		
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="1-2-3_1epoch_train_loss.png"/>
+            </div>
+            <div class="img-slot">
+				<img src="1-2-3_1epoch_results.png"/>
+			</div>
+		</div>
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="1-2-3_5epoch_train_loss.png"/>
+            </div>
+            <div class="img-slot">
+				<img src="1-2-3_5epoch_results.png"/>
+			</div>
+		</div>
 	</section>
+
+	
 	<section>
 		<p class="section-tag">02 &nbsp;Training a Flow Matching Model</p>
-		<h3>2.1: Adding Time Conditioning to UNet</h3>
-		<h3>2.2: Training the UNet</h3>
-		<h3>2.3: Sampling from the UNet</h3>
-	      <img src="2-3_5epoch_train_loss.png"/>
-	    </div>
-	    <div class="img-slot">
-	      <img src="2-3_5epoch_results.png"/>
-	    </div>
-		<h3>2.4: Adding Class-Conditioning to the UNet</h3>
-		<h3>2.5: Training the UNet</h3>
-		<h3>2.6: Sampling from the UNet</h3>
-	      <img src="2-6_5epoch_train_loss.png"/>
-	    </div>
-	    <div class="img-slot">
-	      <img src="2-6_5epoch_results.png"/>
-	    </div>
+		<h3>2.1-3: UNet Time Conditioning: Training & Sampling</h3>
+		&emsp; Similar to in Part 1, we again define some operators that will be used in our UNet to incorporate time conditioning. This time, the model recieves both noisy image x_t as well as t, and is optimized with the MSE between true and predicted velocities. After it's trained, we sample Gaussian noise and perform flow matching to generate images of the digits. While the results at all appear to at least be some kind of hand-scrawled symbol, only with higher number of epochs does the writing actually begin to resemble handwritten digits.
+		
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="2-3_1epoch_train_loss.png"/>
+            </div>
+            <div class="img-slot">
+				<img src="2-3_1epoch_results.png"/>
+			</div>
+		</div>
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="2-3_5epoch_train_loss.png"/>
+            </div>
+            <div class="img-slot">
+				<img src="2-3_5epoch_results.png"/>
+			</div>
+		</div>
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="2-3_10epoch_train_loss.png"/>
+            </div>
+            <div class="img-slot">
+				<img src="2-3_10epoch_results.png"/>
+			</div>
+		</div>
+		
+		<h3>2.4-6: UNet Class Conditioning: Training & Sampling</h3>
+		&emsp; Now, we add class-conditioning into the mix. With class conditioning, the all images samples evidently appear as digits, even with only one epoch. Not only can we control what digit the flow matching will output, we also get better performance. 
+		
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="2-6_1epoch_train_loss.png"/>
+            </div>
+            <div class="img-slot">
+				<img src="2-6_1epoch_results.png"/>
+			</div>
+		</div>
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="2-6_5epoch_train_loss.png"/>
+            </div>
+            <div class="img-slot">
+				<img src="2-6_5epoch_results.png"/>
+			</div>
+		</div>
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="2-6_10epoch_train_loss.png"/>
+            </div>
+            <div class="img-slot">
+				<img src="2-6_10epoch_results.png"/>
+			</div>
+		</div>
+		
+
+		
+		<h3>2.6: No Scheduler</h3>
 
 		I did not finish the scheduler comparison.
 		
