@@ -510,9 +510,11 @@
 			<img src="training_inputs.png"/>
 			<figcaption>temple of Saturn, t=[0.0, 0.25, 0.50, 0.75]</figcaption>
 		</div>
+		&emsp;The noisy training inputs are simply an interpolation between the clean image and a noise image sampled from the Gaussian. Interpolate with parameter t, such that t=0 is pure noise, and t=1 is the clean image.
 	   
 
 		<h3>1.2: Classical Denoising</h3>
+		&emsp;Here, we try to denoise the image by simply blurring out the noise. As shown below, the necessary Gaussian blur sigma parameter increases with the amount of noise in the image.
     <div class="img-slot">
       <img src="blur_0.25.png"/>
       <figcaption>t=0.25 | σ=8</figcaption>
@@ -528,6 +530,7 @@
 
     
 		<h3>1.3: One-Step Denoising</h3>
+		&emsp; With the Gaussian blur as a baseline, we now examine the results from using a Flow-Matching model to denoise in one step. Smaller t have a larger step to make, and the results are similarly more smooth. Fine details must have been lost with high noise.
     <div class="img-slot">
       <img src="one_step_0.25.png"/>
       <figcaption>t=0.25</figcaption>
@@ -547,6 +550,7 @@
       <img src="temple.png"/>
       <figcaption>clean image</figcaption>
     </div>
+	&emsp;The predicted velocity is set to be compared with the ground truth. As shown below, the noised images with the larger t to step have a more vibrant error. It  indicates that the result of the one-step denoising will be less similar to the truth than noised images with smaller t.
     <div class="img-slot">
       <img src="velocity_0.25.png"/>
     </div>
@@ -559,6 +563,7 @@
 
 
     <h3>1.5: Iterative Denoising with Euler Sampling</h3>
+		&emsp; Euler denoising with small steps of 0.02 bring us to a remarkably clean image at t=1.0. At each step, we predict a velocity, then add it to out current x_t, scaled by h to get x_t+h. Evidently, Euler sampling performs the best out of our three denoising methods.
     <div class="img-slot">
       <img src="trajectory.png"/>
     </div>
@@ -568,6 +573,7 @@
 
     
     <h3>1.6: Generating Images from Noise</h3>
+		&emsp;I use a different seed for my RNG, and the images I produce, though still dominated by humanoid subjects, now include some paper texture(?) and a strange tray/box/exhibit thing leaning against the wall. 618 and 620 produce very nice human portraits, but in general, there is something that is slightly 'off' about all the images.
     <div class="img-slot">
       <img src="conditional_samples.png"/>
     </div>
@@ -579,17 +585,18 @@
 	<section>
 		<p class="section-tag">02 &nbsp;Conditional Generation and Guidance</p>
 		<h3>2.1: Classifier-Free Guidance</h3>
+		&emsp;Here, we are generating proper portraits. They appear like people I'd see in real life (or at least on a LinkedIn).HOwever, all my images are now only people, even though people are not the only subjects of 'high-quality photos'.
 		
     <div class="img-slot">
       <img src="cfg_samples.png"/>
     </div>
   </section>
 
-
   
 	<section>
 		<p class="section-tag">03 &nbsp;Creative Applications</p>
 		<h3>3.1: Image-to-Image Editing</h3>
+		&emsp; Examining the generated images, You can see the human image bias in almost all of images starting with a low t of 0.02, but it tends to disappear. There is also some sort of need to include a screen of sorts for these t=0.02 images. Something else I found notable was the appearance of two washing machines in my first image. Both the human and the washing machine appear completely unrelated to the ruins of the temple of Saturn, so I find it quite funny. Something else notable is that my last drawing has a drawing of a person (non-realistic), but for t=0.04, 0.06, there is no human subject at all despite the model's bias. 
 		
     <div class="img-slot">
       <img src="edit_campanile.png"/>
@@ -672,18 +679,59 @@
         </div>
       </div>
     </div>
+	</section>
 
+	
+	<h2>Part B: Flow Matching from Scratch</h2>
+	<section>
+		<p class="section-tag">01 &nbsp;Training a Single-Step Denoising UNet</p>
+		<h3>1.1: Implementing the UNet</h3>
+		<h3>1.2: Using the UNet to Train a Denoiser</h3>
+	    <div class="img-slot">
+	      <img src="1-2_noisy_images.png"/>
+	    </div>
+		<h3>1.2.1: Training</h3>
+		
+	    <div class="img-slot">
+	      <img src="1-2-1_5epoch_train_loss.png"/>
+	    </div>
+	    <div class="img-slot">
+	      <img src="1-2-1_5epoch_results.png"/>
+	    </div>
+		<h3>1.2.2: Out-of-Distribution Testing</h3>
+	    <div class="img-slot">
+	      <img src="1-2-2_OODh_results.png"/>
+	    </div>
+		<h3>1.2.3: Denoising Pure Noise</h3>
+	      <img src="1-2-3_5epoch_train_loss.png"/>
+	    </div>
+	    <div class="img-slot">
+	      <img src="1-2-3_5epoch_results.png"/>
+	    </div>
+		
+	</section>
+	<section>
+		<p class="section-tag">02 &nbsp;Training a Flow Matching Model</p>
+		<h3>2.1: Adding Time Conditioning to UNet</h3>
+		<h3>2.2: Training the UNet</h3>
+		<h3>2.3: Sampling from the UNet</h3>
+	      <img src="2-3_5epoch_train_loss.png"/>
+	    </div>
+	    <div class="img-slot">
+	      <img src="2-3_5epoch_results.png"/>
+	    </div>
+		<h3>2.4: Adding Class-Conditioning to the UNet</h3>
+		<h3>2.5: Training the UNet</h3>
+		<h3>2.6: Sampling from the UNet</h3>
+	      <img src="2-6_5epoch_train_loss.png"/>
+	    </div>
+	    <div class="img-slot">
+	      <img src="2-6_5epoch_results.png"/>
+	    </div>
 
-
-    
-  </section>
-
-
-  
-  <h2>Part B: ...</h2>
-  <section>
-    
-  </section>
+		I did not finish the scheduler comparison.
+		
+	</section>
   
   <footer>
   	Credit goes to Allena Olgvie for the page's CSS style sheet I borrowed from a different group project together
