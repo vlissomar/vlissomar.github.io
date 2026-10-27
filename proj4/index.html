@@ -502,20 +502,93 @@
 	</header>
 
 	<section>
-		<p class="section-tag">A~ &nbsp;Image Warping and Mosaicking</p>
+		<p class="section-tag">A &nbsp;Image Warping and Mosaicking</p>
     
-		<h3>A.1: Shoot the Pictures</h3>
-    
+		<h3>A.1: Shoot the Pictures</h3> 
+		Images I took:
+		<!-- label where you got the image from!-->
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="partA/temp.png"/>
+            </div>
+            <div class="img-slot">
+				<img src="partA/temp.png"/>
+			</div>
+		</div>
+		
+		Also, some images I sourced from the web: <a href="https://cs.adelaide.edu.au/~tjchin/apap/#Datasets">https://cs.adelaide.edu.au/~tjchin/apap/</a>
+		
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="partA/case1_1.JPG"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/case1_2.JPG"/>
+            </div>
+		</div>
+		<div class="img-grid-3">
+			<div class="img-slot">
+				<img src="partA/case1_3.JPG"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/case1_4.JPG"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/case1_5.JPG"/>
+            </div>
+		</div>
+		Another Scene
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="partA/case26_1.JPG"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/cas26_2.JPG"/>
+            </div>
+		</div>
+		Note that there appears to be a shift in the camera position, so the previous 2 images can't be stitched properly with the rest.
+		<div class="img-grid-3">
+			<div class="img-slot">
+				<img src="partA/case26_3.JPG"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/case26_4.JPG"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/case26_5.JPG"/>
+            </div>
+		</div>
+		
 		<h3>A.2: Recover Homographies</h3>
+		First, let's see image correspondences. I manually recorded correspondences using <a href="https://pixspy.com">pixspy.com</a>
+		<!-- include correspondence images here-->
+		<div class="img-slot">
+			<img src="partA/temp.png"/>
+        </div>
+
+		Now, for the math! As we've defined in class, 
+		<p>
+  \(H\) is a \(3 \times 3\) matrix:
+  \[
+  H = \begin{pmatrix}
+  h_{11} & h_{12} & h_{13} \\
+  h_{21} & h_{22} & h_{23} \\
+  h_{31} & h_{32} & h_{33}
+  \end{pmatrix}
+  \]
+</p>
+
+			
+			
     
 		<h3>A.3: Warp the Images</h3>
-    
-    <h3>A.4: Blend the Images into a Mosaic</h3>
+		
+		<h3>A.4: Blend the Images into a Mosaic</h3>
   </section>
 
   
 	<section>
-		<p class="section-tag">B~ &nbsp;NOT IMPLEMENTED</p>
+		<p class="section-tag">B &nbsp;NOT IMPLEMENTED</p>
 		<h3>B.1: ...</h3>
 	</section>
 
