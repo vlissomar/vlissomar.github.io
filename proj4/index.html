@@ -566,6 +566,15 @@
 		<div class="img-slot">
 			<img src="partA/temp.png"/>
         </div>
+		<div class="img-slot">
+			<img src="partA/temp.png"/>
+        </div>
+		<div class="img-slot">
+			<img src="partA/temp.png"/>
+        </div>
+		<div class="img-slot">
+			<img src="partA/temp.png"/>
+        </div>
 
 		Now, for the math! As we've defined in class, \(H\) is a \(3 \times 3\) matrix
 		\[ H = \begin{pmatrix} a & b & c \\ d & e & f \\ g & h & 1 \end{pmatrix}\]
@@ -599,17 +608,70 @@
 		<p>Now, let's apply our computed H to rectify images. On the left side, we use Nearest Neighbor inverse warping, and ond the right, we have Bilinear inverse warping.</p>
 		<div class="img-grid">
 			<figcaption>Nearest Neighbor</figcaption>
-			<div class="img-slot">
-				<img src="partA/temp.png"/>
-            </div>
 			<figcaption>Bilinear</figcaption>
 			<div class="img-slot">
 				<img src="partA/temp.png"/>
             </div>
+			<div class="img-slot">
+				<img src="partA/temp.png"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/temp.png"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/temp.png"/>
+            </div>
 		</div>
-
+		<p>As shown above, bilinear warping produces smoother looking images!</p>
 		
 		<h3>A.4: Blend the Images into a Mosaic</h3>
+		<p>&emsp;Finally, we have image warping. Before anything else, let us first set a rule on our input. Image corespondence pairs must be passed in an order where they can form a chain, i.e. any consecutive image pair correspondences (im1, im2) must have it so that im2 of the previous pair is im1 of the next pair. <br>
+		&emsp;As I said in the project overview, my first approach was very tedious. Essentially, I made mosaic2Images function that successfully stitched two images by warping im1 to im2 coordinates, padding im2, then blending the two images. This can then be a helper function for mosaicMultipleImages, which takes advantage of the property that im2 itself is unchanged in the mosaicked image pair. For three images A, B, C with correspondences AB and BC, we would warp A to B's coordinate system. Then, we shift the point correspondences of B in BC depending on the padding applied to B when stitching A and B. These shifted points can then be used to compute the proper homography for AB to C coordinates. <br>
+		&emsp;This method is primarily exhausting because of all the tracking in between. Also, my implementation worked to stitch together 3 images correctly, but breaks on 4 images. While counting pixels, I realized this was because my shifted points used to compute H for ABC onto D was incorrect—naturally, H was also incorrect. I was unable to trace the issue, and ended up pivoting. Regardless, here is an image stitched with this incremental stitching method. </p>
+		<div class="img-slot">
+			<img src="partA/temp.png"/>
+        </div>
+		<div class="img-grid-3">
+			<div class="img-slot">
+				<img src="partA/case26_3.JPG"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/case26_4.JPG"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/case26_5.JPG"/>
+            </div>
+		</div>
+		<p>&emsp;The other approach is math heavy, but incredibly clean after reasoning everything through. Here, we warp each image onto a global frame. For convenience, we set the first im1 of all correspondence pairs as the base of the global frame.<br>
+		&emsp;As earlier, we dictate that correspondence pairs must be chainable. This allows us to easily computing homographies back to our first image coordinate system. Again, let us use a chain of images, A, B, C..., and let \(H_X\) be the homography from image X to image A, and let \(H_{XY}\) be the homography from X coordinates to Y coordinates. <br>
+		&emsp;From our correspondences, we have</p>
+		\[
+		H_{AB} =\text{computeH(corrAB_im1_pts, corrAB_im2_pts)} \\
+		H_{BC} =\text{computeH(corrBC_im1_pts, corrBC_im2_pts)} \\
+		H_{CD} =\text{computeH(corrCD_im1_pts, corrCD_im2_pts)}
+		\]
+		
+		<p>Note that </p>
+		\[H_{XY} = H_{YX}^{-1} \qquad	H_{XZ} = H_{XY} H_{YZ} \qquad	H_X = H_{XA}\]
+		
+		<p>Combining the above, we can now calculate</p>
+		\[H_A = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} \]
+		
+		\[\begin{alignat}{2}
+		H_B &= H_{BA} &&= H_{AB}^{-1}				\\
+		H_C &= H_{CB}H_{BA} &&=H_{BC}^{-1}H_B		\\
+		H_D &= H_{DC}H_{CB}H_{BA} &&=H_{CD}^{-1}H_C
+		\end{alignat}\]
+		
+		<p> &emsp;It should now be evident how to calculate the H matrices to reach A coordinate space.<br>
+		&emsp; There is, however, one more complication. Some images may be warped into negative coordinates! That's why we must also compute an overall canvas size. This is quite easy—simply take the corners of each image, warp into A coordinates, and find the bounding box of these points. Also, define the translation transformation using the min x and y values, and apply to our homographies</p>
+		\[ T = \begin{pmatrix} 1 & 0 & -x_{min} \\ 0 & 1 & -y_{min} \\ 0 & 0 & 1 \end{pmatrix} \]
+		\[
+		H_{mosaic, X} = TH_X
+		\]
+		
+		
+		
 	</section>
 
 
