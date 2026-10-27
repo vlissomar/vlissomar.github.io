@@ -664,11 +664,22 @@
 		\end{alignat}\]
 		
 		<p> &emsp;It should now be evident how to calculate the H matrices to reach A coordinate space.<br>
-		&emsp; There is, however, one more complication. Some images may be warped into negative coordinates! That's why we must also compute an overall canvas size. This is quite easy—simply take the corners of each image, warp into A coordinates, and find the bounding box of these points. Also, define the translation transformation using the min x and y values, and apply to our homographies</p>
+		&emsp; There is, however, one more complication. Some images may be warped into negative coordinates! That's why we must also compute an overall canvas size. This is quite easy—simply take the corners of each image, warp into A coordinates, and find the bounding box of these points. Also, define the translation transformation using the min x and y values, and apply to our homographies.</p>
 		\[ T = \begin{pmatrix} 1 & 0 & -x_{min} \\ 0 & 1 & -y_{min} \\ 0 & 0 & 1 \end{pmatrix} \]
-		\[
-		H_{mosaic, X} = TH_X
-		\]
+		\[H_{mosaic, X} = TH_X\]
+
+		<p>With warping out of the way, we can talk a little about blending. Here, I used the Laplacian Stack Blending implemented in Project 2. Distance transforms are used to create a mask.</p>
+		<div class="img-grid-3">
+			<div class="img-slot">
+				<img src="partA/warped4.png"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/mosaic3.png"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/mask.png"/>
+            </div>
+		</div>
 		
 		
 		
