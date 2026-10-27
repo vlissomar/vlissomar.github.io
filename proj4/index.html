@@ -566,12 +566,35 @@
 			<img src="partA/temp.png"/>
         </div>
 
-		Now, for the math! As we've defined in class, 
-		<p>
-  \(H\) is a \(3 \times 3\) matrix:
-  \[ H = \begin{pmatrix} a & b & c \\
-						 d & e & f \\
-						 g & h & 1 \end{pmatrix}\]</p>
+		Now, for the math! As we've defined in class, \(H\) is a \(3 \times 3\) matrix
+		\[ H = \begin{pmatrix} a & b & c \\ d & e & f \\ g & h & 1 \end{pmatrix}\],
+		where 
+		\[H \begin{bmatrix} x_1 \\ y_1 \\ 1 \end{bmatrix} = \begin{bmatrix} wx_2 \\ wy_2 \\ w \end{bmatrix} \tag{1}\]
+
+		<p>From our known values, corresponding points \((x_1, y_1)\) and \((x_2, y_2)\), we now want to set up a system of equations to solve for H. Expanding (1), we get</p>
+		\[\begin{align}
+		ax_1 + by_1 + c &= wx_2 \\
+		dx_1 + ey_1 + f &= wy_2 \\
+		gx_1 + hy_1 + 1 &= w	\end{align} \]
+		<p>Substitute \(w\) in and move everything to the left</p>
+		\[\begin{align}
+		ax_1 + by_1 + c - gx_1x_2 - hx_2y_1 - x_2 &= 0	\\
+		dx_1 + ey_1 + f - gx_1y_2 - hy_1y_2 - y_2 &= 0 
+		\end{align} \tag{2}\]
+		<p>From (2), we get two linear equations from each corresponding point pair \((x_1, y_1)\) and \((x_2, y_2)\). With 8 unknowns, that means we require at least 8 equations, or 4 point pairs. To make our homography more accurate, we can use >4 point pairs and compute a Least Squares (with some rearranging, of course. </p>
+		\[\begin{alignat}{9}
+		&ax_1 + &by_1 + &c - &&&&gx_1x_2 - &hx_2y_1 &= x_2	\\
+		&&&&dx_1 + &ey_1 + &f - &gx_1y_2 - &hy_1y_2 &= y_2 
+		\end{alignat} \tag{3}\]
+<p>And for Least Squares, let the \(x_1, y_1, x_2, y_2\) be columns, with each row being a correspondence pair, so we make our matrix \(A\) by stacking the \(A_1\) and \(A_2\) matrices.</p>
+		\[H_{flat}=\begin{bmatrix}a&b&c&d&e&f&g&h\end{bmatrix}^T\]
+		\[\begin{align}
+		A_1 &= \begin{bmatrix} x_1 & y_1 & 1 & 0 & 0 & 0 & -x_1x_2 & -x_2y_1 \end{bmatrix} \\
+		A_2 &= \begin{bmatrix} 0 & 0 & 0 & x_1 & y_1 & 1 & -x_1y_2 & -y_1y_2 \end{bmatrix}
+		\end{align}\]
+		
+
+		
 
 			
 			
