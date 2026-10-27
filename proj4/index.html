@@ -667,6 +667,26 @@
 		&emsp; There is, however, one more complication. Some images may be warped into negative coordinates! That's why we must also compute an overall canvas size. This is quite easy—simply take the corners of each image, warp into A coordinates, and find the bounding box of these points. Also, define the translation transformation using the min x and y values, and apply to our homographies.</p>
 		\[ T = \begin{pmatrix} 1 & 0 & -x_{min} \\ 0 & 1 & -y_{min} \\ 0 & 0 & 1 \end{pmatrix} \]
 		\[H_{mosaic, X} = TH_X\]
+		
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="partA/warped0.png"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/warped1.png"/>
+            </div>
+		</div>
+		<div class="img-grid-3">
+			<div class="img-slot">
+				<img src="partA/warped2.png"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/warped3.png"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/warped4.png"/>
+            </div>
+		</div>
 
 		<p>With warping out of the way, we can talk a little about blending. Here, I used the Laplacian Stack Blending implemented in Project 2. Distance transforms are used to create a mask.</p>
 		<div class="img-grid-3">
@@ -680,10 +700,34 @@
 				<img src="partA/mask.png"/>
             </div>
 		</div>
+		<p>Alright, let's see some stitched images!</p>
+		<div class="img-slot">
+			<img src="partA/case1_out.png"/>
+        </div>
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="partA/case1_1.JPG"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/case1_2.JPG"/>
+            </div>
+		</div>
+		<div class="img-grid-3">
+			<div class="img-slot">
+				<img src="partA/case1_3.JPG"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/case1_4.JPG"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/case1_5.JPG"/>
+            </div>
+		</div>
 		
 		
 		
 	</section>
+	
 
 
 
