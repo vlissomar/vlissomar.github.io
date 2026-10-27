@@ -629,9 +629,14 @@
 		<p>&emsp;Finally, we have image warping. Before anything else, let us first set a rule on our input. Image corespondence pairs must be passed in an order where they can form a chain, i.e. any consecutive image pair correspondences (im1, im2) must have it so that im2 of the previous pair is im1 of the next pair. <br>
 		&emsp;As I said in the project overview, my first approach was very tedious. Essentially, I made mosaic2Images function that successfully stitched two images by warping im1 to im2 coordinates, padding im2, then blending the two images. This can then be a helper function for mosaicMultipleImages, which takes advantage of the property that im2 itself is unchanged in the mosaicked image pair. For three images A, B, C with correspondences AB and BC, we would warp A to B's coordinate system. Then, we shift the point correspondences of B in BC depending on the padding applied to B when stitching A and B. These shifted points can then be used to compute the proper homography for AB to C coordinates. <br>
 		&emsp;This method is primarily exhausting because of all the tracking in between. Also, my implementation worked to stitch together 3 images correctly, but breaks on 4 images. While counting pixels, I realized this was because my shifted points used to compute H for ABC onto D was incorrect—naturally, H was also incorrect. I was unable to trace the issue, and ended up pivoting. Regardless, here is an image stitched with this incremental stitching method. </p>
-		<div class="img-slot">
-			<img src="partA/temp.png"/>
-        </div>
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="partA/incremental1.png"/>
+            </div>
+			<div class="img-slot">
+				<img src="partA/incremental2.png"/>
+            </div>
+		</div>
 		<div class="img-grid-3">
 			<div class="img-slot">
 				<img src="partA/case26_3.JPG"/>
