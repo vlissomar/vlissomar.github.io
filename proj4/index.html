@@ -275,6 +275,24 @@
 		.img-grid-3 .img-slot {
 		    margin: 0; /* Keeps the border structural styling while removing extra outer margins */
 		}
+		/* ── TIGHT 3-COLUMN GRID (NO BORDER) ── */
+		.tight-grid-3 {
+		  display: grid;
+		  grid-template-columns: repeat(3, 1fr);
+		  gap: 0.4rem; /* Tight spacing between columns and rows */
+		  margin: 1.5rem 0;
+		}
+		
+		.tight-grid-3 > * {
+		  min-width: 0; /* Prevents oversized items from breaking the columns */
+		}
+		
+		.tight-grid-3 img {
+		  width: 100%;
+		  height: auto;
+		  display: block;
+		  border-radius: 4px; /* Subtle rounding without any blue border */
+		}
 		
 		.img-grid-4 {
 		    display: grid;
@@ -483,6 +501,7 @@
           body::before, body::after { width: 60px; }
           .img-grid { grid-template-columns: 1fr; }
           .img-grid-3 { grid-template-columns: 1fr; }
+  		  .tight-grid-3 { grid-template-columns: 1fr; }
           .img-grid-4 { grid-template-columns: 1fr; }
           .contrib-grid { grid-template-columns: 1fr; }
           .meta-row { gap: 1rem; }
@@ -507,7 +526,6 @@
     
 		<h3>A.1: Shoot the Pictures</h3> 
 		Images I took:<br>
-		<!-- label where you got the image from!-->
 		Gateway Cafe
 		<div class="img-grid">
 			<div class="img-slot">
@@ -613,8 +631,6 @@
 		
 		<h3>A.2: Recover Homographies</h3>
 		First, let's see image correspondences. I manually recorded correspondences using <a href="https://pixspy.com">pixspy.com</a>
-		<!-- include correspondence images here-->
-		<!------------------------------------------------------------------------IMAGES HERE------------------------------------------------------------------------>
 		
 		<div class="img-slot">
 			<img src="partA/corr2.png"/>
@@ -648,7 +664,6 @@
 		<div class="img-slot">
 			<img src="partA/corr19.png"/>
 		</div>
-		<!------------------------------------------------------------------------IMAGES HERE------------------------------------------------------------------------>
 		
 
 		Now, for the math! As we've defined in class, \(H\) is a \(3 \times 3\) matrix
@@ -790,7 +805,6 @@
             </div>
 		</div>
 		<p>Alright, let's see some stitched images!</p>
-		<!------------------------------------------------------------------------IMAGES HERE------------------------------------------------------------------------>
 		Gateway Cafe
 		
 		<div class="img-slot">
@@ -857,7 +871,6 @@
 				<img src="partA/campanile_7.png"/>
 			</div>
 		</div>
-		<!------------------------------------------------------------------------IMAGES HERE------------------------------------------------------------------------>
 		
 		Case 1
 		<div class="img-slot">
@@ -901,8 +914,68 @@
 	</section>
 	
 	<section>
-		<p id="partb" class="section-tag">B &nbsp;NOT IMPLEMENTED</p>
-		<h3>B.1: ...</h3>
+		<p id="partb" class="section-tag">B &nbsp;Feature Matching for Autostitching</p>
+		<h3>B.1: Harris Corner Detection</h3>
+		<p>ANMS was a little confusing to implement, but essentially the algorithm sorts interest points by their minimum suppression radius, \(r_i\), which is the smallest distance to another point that is a 'stronger' corner, then returns a subset of the points with the greatest \(r_i\). In implementation, we must iterate over all points and calculate their \(r_i\), sort in descending order, the slice the front part of the list. As can be seen below, this works well in finding spatially distributed points over the image.</p>
+		<div class="tight-grid-3">
+			<figure style="margin: 0;">
+				<figcaption>Harris interest points</figcaption>
+				<img src="partB/image1.png">
+			</figure>
+			<figure style="margin: 0;">
+				<figcaption>ANMS 250</figcaption>
+				<img src="partB/image1.png">
+			</figure>
+			<figure style="margin: 0;">
+				<figcaption>ANMS 500</figcaption>
+				<img src="partB/image1.png">
+			</figure>
+		</div>
+		<div class="tight-grid-3">
+			<img src="partB/image1.png">
+			<img src="partB/image1.png">
+			<img src="partB/image1.png">
+		</div>
+		<div class="tight-grid-3">
+			<img src="partB/image1.png">
+			<img src="partB/image1.png">
+			<img src="partB/image1.png">
+		</div>
+		<h3>B.2: Feature Descriptor Extraction</h3>
+		<h3>B.3: Feature Matching</h3>
+		<h3>B.4: RANSAC for Robust Homography</h3>
+		<p>In this section, I implement RANSAC as described in lecture, then merge work in Part B as a new function autostitch_computeH(im1, im2) replacing computeH in the mosaicking pipeline from Part A. For 2000 iterations, I sample 4 random correspondences and compute a homography H. Then, using H, I compute the number of inliers for this homography (correspondences where H @ im1_pts ≈ im2_pts). After the loop closes, I recompute H for the largest set of inliers. With this, the autostitch algorithm is also finished. Here are some results below.</p>
+		<div class="tight-grid-3">
+			<figure style="margin: 0;">
+				<figcaption>manual stitch</figcaption>
+				<img src="partB/auto_case1.png">
+			</figure>
+			<figure style="margin: 0;">
+				<figcaption>auto stitch</figcaption>
+				<img src="partB/manual_case1.png">
+			</figure>
+		</div>
+		<div class="tight-grid-3">
+			<img src="partB/auto_case26a.png">
+			<img src="partB/manual_case26a.png">
+		</div>
+		<div class="tight-grid-3">
+			<img src="partB/auto_case26b.png">
+			<img src="partB/manual_case26b.png">
+		</div>
+		<div class="tight-grid-3">
+			<img src="partB/auto_gateway-cafe.png">
+			<img src="partB/manual_gateway-cafe.png">
+		</div>
+		<div class="tight-grid-3">
+			<img src="partB/auto_gateway-inside.png">
+			<img src="partB/manual_gateway-inside.png">
+		</div>
+		<div class="tight-grid-3">
+			<img src="partB/auto_campanile.png">
+			<img src="partB/manual_campanile.png">
+		</div>
+		
 	</section>
 
   
