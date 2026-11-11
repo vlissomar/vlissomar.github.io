@@ -1022,6 +1022,9 @@
 
 		
 		<h3>B.3: Feature Matching</h3>
+		<p>Lastly, we want to match features on different images. Using the helper dist2 function in harris.py, we make a error lookup table from our flattened features. For each flattened feature, we record its best nearest neighbor (NN) from the other image, as well as the error ratio defined as \(e_(1-NN) / e_(2-NN)\). I also incorporated a symmetry requirement, where each matched feature pair must mutually be each other's NN. After thresholding on this error ratio, we have a noisy set of correspondences to run RANSAC on.</p>
+
+		
 		<h3>B.4: RANSAC for Robust Homography</h3>
 		<p>&emsp;In this section, I implement RANSAC as described in lecture, then merge work in Part B as a new function autostitch_computeH(im1, im2) replacing computeH in the mosaicking pipeline from Part A. For 2000 iterations, I sample 4 random correspondences and compute a homography H. Then, using H, I compute the number of inliers for this homography (correspondences where H @ im1_pts ≈ im2_pts). After the loop closes, I recompute H for the largest set of inliers. With this, the autostitch algorithm is also finished. Here are some results below.</p>
 		
