@@ -923,23 +923,23 @@
 				<img src="partB/ip_campanile_4.png">
 			</figure>
 			<figure style="margin: 0;">
-				<figcaption>ANMS 250</figcaption>
-				<img src="partB/anms_250_campanile_4.png">
-			</figure>
-			<figure style="margin: 0;">
 				<figcaption>ANMS 500</figcaption>
 				<img src="partB/anms_500_campanile_4.png">
+			</figure>
+			<figure style="margin: 0;">
+				<figcaption>ANMS 250</figcaption>
+				<img src="partB/anms_250_campanile_4.png">
 			</figure>
 		</div>
 		<div class="tight-grid-3">
 			<img src="partB/ip_case1_4.png">
-			<img src="partB/anms_250_case1_4.png">
 			<img src="partB/anms_500_case1_4.png">
+			<img src="partB/anms_250_case1_4.png">
 		</div>
 		<div class="tight-grid-3">
 			<img src="partB/ip_gateway-cafe_2.png">
-			<img src="partB/anms_250_gateway-cafe_2.png">
 			<img src="partB/anms_500_gateway-cafe_2.png">
+			<img src="partB/anms_250_gateway-cafe_2.png">
 		</div>
 		<h3>B.2: Feature Descriptor Extraction</h3>
 		<p>&emsp;This section is very straightforward. Given a list of interest points, we create a 40x40 window centered on said interest points. Obviously, 40 is an  even, number so it can't be 'truly' centered on the pixel, so we'll put the interest point on the top left of the 4 pixels making the window center. Then, we downsample the image (don't forget to blur first!), and bias/gain-normalize the resulting array to get our feature descriptor. See some examples below. </p>
