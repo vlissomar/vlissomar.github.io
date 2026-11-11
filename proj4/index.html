@@ -920,60 +920,71 @@
 		<div class="tight-grid-3">
 			<figure style="margin: 0;">
 				<figcaption>Harris interest points</figcaption>
-				<img src="partB/image1.png">
+				<img src="partB/ip_campanile_4.png">
 			</figure>
 			<figure style="margin: 0;">
 				<figcaption>ANMS 250</figcaption>
-				<img src="partB/image1.png">
+				<img src="partB/anms_250_campanile_4.png">
 			</figure>
 			<figure style="margin: 0;">
 				<figcaption>ANMS 500</figcaption>
-				<img src="partB/image1.png">
+				<img src="partB/anms_500_campanile_4.png">
 			</figure>
 		</div>
 		<div class="tight-grid-3">
-			<img src="partB/image1.png">
-			<img src="partB/image1.png">
-			<img src="partB/image1.png">
+			<img src="partB/ip_case1_4.png">
+			<img src="partB/anms_250_case1_4.png">
+			<img src="partB/anms_500_case1_4.png">
 		</div>
 		<div class="tight-grid-3">
-			<img src="partB/image1.png">
-			<img src="partB/image1.png">
-			<img src="partB/image1.png">
+			<img src="partB/ip_gateway-cafe_2.png">
+			<img src="partB/anms_250_gateway-cafe_2.png">
+			<img src="partB/anms_500_gateway-cafe_2.png">
 		</div>
 		<h3>B.2: Feature Descriptor Extraction</h3>
 		<h3>B.3: Feature Matching</h3>
 		<h3>B.4: RANSAC for Robust Homography</h3>
 		<p>In this section, I implement RANSAC as described in lecture, then merge work in Part B as a new function autostitch_computeH(im1, im2) replacing computeH in the mosaicking pipeline from Part A. For 2000 iterations, I sample 4 random correspondences and compute a homography H. Then, using H, I compute the number of inliers for this homography (correspondences where H @ im1_pts ≈ im2_pts). After the loop closes, I recompute H for the largest set of inliers. With this, the autostitch algorithm is also finished. Here are some results below.</p>
-		<div class="tight-grid-3">
-			<figure style="margin: 0;">
-				<figcaption>manual stitch</figcaption>
+		
+		<div class="img-grid">
+			<figcaption>Manual Stitch</figcaption>
+			<figcaption>Auto Stitche</figcaption>
+			<div class="img-slot">
 				<img src="partB/auto_case1.png">
-			</figure>
-			<figure style="margin: 0;">
-				<figcaption>auto stitch</figcaption>
+            </div>
+			<div class="img-slot">
 				<img src="partB/manual_case1.png">
-			</figure>
-		</div>
-		<div class="tight-grid-3">
-			<img src="partB/auto_case26a.png">
-			<img src="partB/manual_case26a.png">
-		</div>
-		<div class="tight-grid-3">
-			<img src="partB/auto_case26b.png">
-			<img src="partB/manual_case26b.png">
-		</div>
-		<div class="tight-grid-3">
-			<img src="partB/auto_gateway-cafe.png">
-			<img src="partB/manual_gateway-cafe.png">
-		</div>
-		<div class="tight-grid-3">
-			<img src="partB/auto_gateway-inside.png">
-			<img src="partB/manual_gateway-inside.png">
-		</div>
-		<div class="tight-grid-3">
-			<img src="partB/auto_campanile.png">
-			<img src="partB/manual_campanile.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/auto_case26a.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/manual_case26a.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/auto_case26b.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/manual_case26b.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/auto_gateway-cafe.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/manual_gateway-cafe.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/auto_gateway-inside.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/manual_gateway-inside.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/auto_campanile.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/manual_campanile.png">
+            </div>
 		</div>
 		
 	</section>
