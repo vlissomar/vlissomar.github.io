@@ -1097,6 +1097,83 @@
 				<img src="partB/window_B_411.png">
             </div>
 		</div>
+
+
+		
+		<div class="img-grid">
+			<div class="img-slot">
+				<img src="partB/windowsC.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/windowsD.png">
+            </div>
+			
+			<div class="img-slot">
+				<img src="partB/feature_C_18.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/feature_D_33.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_C_18.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_D_33.png">
+            </div>
+			
+			<div class="img-slot">
+				<img src="partB/feature_C_290.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/feature_D_326.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_C_290.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_D_326.png">
+            </div>
+			
+			<div class="img-slot">
+				<img src="partB/feature_C_431.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/feature_D_444.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_C_431.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_D_444.png">
+            </div>
+			
+			<div class="img-slot">
+				<img src="partB/feature_C_3.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/feature_D_0.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_C_3.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_D_0.png">
+            </div>
+			
+			<div class="img-slot">
+				<img src="partB/feature_C_2.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/feature_D_3.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_C_2.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_D_3.png">
+            </div>
+			
+		</div>
 		
 		<h3>B.4: RANSAC for Robust Homography</h3>
 		<p>&emsp;In this section, I implement RANSAC as described in lecture, then merge work in Part B as a new function autostitch_computeH(im1, im2) replacing computeH in the mosaicking pipeline from Part A. For 2000 iterations, I sample 4 random correspondences and compute a homography H. Then, using H, I compute the number of inliers for this homography (correspondences where H @ im1_pts ≈ im2_pts). After the loop closes, I recompute H for the largest set of inliers. With this, the autostitch algorithm is also finished. Here are some results below.</p>
