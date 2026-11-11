@@ -520,7 +520,7 @@
 		<p class="subtitle">[Auto]Stitching Photo Mosaics</p>
 	</header>
 	<h2>Project Overview</h2>
-	<p>This project is about image stitching. In part A, I use manually taken image correspondences to compute a projective transform to bring image pairs into the same coordinate system. Then, using the Laplacian Blending of Project 2, I stitch images together. There are two main approaches I took when mosaicking together multiple images, one of which was very painful and eventually unsuccessful, and the other of which was clean and easy due to math (See A.4 for more details). The lesson here is that things are easier when you use your brain.</p>
+	<p>&emsp;This project is about image stitching. In part A, I use manually taken image correspondences to compute a projective transform to bring image pairs into the same coordinate system. Then, using the Laplacian Blending of Project 2, I stitch images together. There are two main approaches I took when mosaicking together multiple images, one of which was very painful and eventually unsuccessful, and the other of which was clean and easy due to math (See A.4 for more details). The lesson here is that things are easier when you use your brain.</p>
 	<section>
 		<p class="section-tag">A &nbsp;Image Warping and Mosaicking</p>
     
@@ -792,7 +792,7 @@
             </div>
 		</div>
 
-		<p>With warping out of the way, we can talk a little about blending. Here, I used the Laplacian Stack Blending implemented in Project 2. Distance transforms are used to create a mask.</p>
+		<p>&emsp;With warping out of the way, we can talk a little about blending. Here, I used the Laplacian Stack Blending implemented in Project 2. Distance transforms are used to create a mask.</p>
 		<div class="img-grid-3">
 			<div class="img-slot">
 				<img src="partA/warped4.png"/>
@@ -916,7 +916,7 @@
 	<section>
 		<p id="partb" class="section-tag">B &nbsp;Feature Matching for Autostitching</p>
 		<h3>B.1: Harris Corner Detection</h3>
-		<p>ANMS was a little confusing to implement, but essentially the algorithm sorts interest points by their minimum suppression radius, \(r_i\), which is the smallest distance to another point that is a 'stronger' corner, then returns a subset of the points with the greatest \(r_i\). In implementation, we must iterate over all points and calculate their \(r_i\), sort in descending order, the slice the front part of the list. As can be seen below, this works well in finding spatially distributed points over the image.</p>
+		<p>&emsp;ANMS was a little confusing to implement, but essentially the algorithm sorts interest points by their minimum suppression radius, \(r_i\), which is the smallest distance to another point that is a 'stronger' corner, then returns a subset of the points with the greatest \(r_i\). In implementation, we must iterate over all points and calculate their \(r_i\), sort in descending order, the slice the front part of the list. As can be seen below, this works well in finding spatially distributed points over the image.</p>
 		<div class="tight-grid-3">
 			<figure style="margin: 0;">
 				<figcaption>Harris interest points</figcaption>
@@ -942,13 +942,54 @@
 			<img src="partB/anms_500_gateway-cafe_2.png">
 		</div>
 		<h3>B.2: Feature Descriptor Extraction</h3>
+		<p>&emsp;This section is very straightforward. Given a list of interest points, we create a 40x40 window centered on said interest points. Obviously, 40 is an  even, number so it can't be 'truly' centered on the pixel, so we'll put the interest point on the top left of the 4 pixels making the window center. Then, we downsample the image (don't forget to blur first!), and bias/gain-normalize the resulting array to get our feature descriptor. See some examples below. </p>
+		
+		<div class="img-slot">
+			<img src="partB/windows.JPG">
+        </div>
+		<div class="img-grid">
+			<figcaption>Window (40x40)</figcaption>
+			<figcaption>Feature Descriptor (8x8)</figcaption>
+			<div class="img-slot">
+				<img src="partB/feature_958.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_958.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/feature_1679.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_1679.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/feature_3325.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_3325.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/feature_3796.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_3796.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/feature_6057.png">
+            </div>
+			<div class="img-slot">
+				<img src="partB/window_6057.png">
+            </div>
+		</div>
+
+		
 		<h3>B.3: Feature Matching</h3>
 		<h3>B.4: RANSAC for Robust Homography</h3>
-		<p>In this section, I implement RANSAC as described in lecture, then merge work in Part B as a new function autostitch_computeH(im1, im2) replacing computeH in the mosaicking pipeline from Part A. For 2000 iterations, I sample 4 random correspondences and compute a homography H. Then, using H, I compute the number of inliers for this homography (correspondences where H @ im1_pts ≈ im2_pts). After the loop closes, I recompute H for the largest set of inliers. With this, the autostitch algorithm is also finished. Here are some results below.</p>
+		<p>&emsp;In this section, I implement RANSAC as described in lecture, then merge work in Part B as a new function autostitch_computeH(im1, im2) replacing computeH in the mosaicking pipeline from Part A. For 2000 iterations, I sample 4 random correspondences and compute a homography H. Then, using H, I compute the number of inliers for this homography (correspondences where H @ im1_pts ≈ im2_pts). After the loop closes, I recompute H for the largest set of inliers. With this, the autostitch algorithm is also finished. Here are some results below.</p>
 		
 		<div class="img-grid">
 			<figcaption>Manual Stitch</figcaption>
-			<figcaption>Auto Stitche</figcaption>
+			<figcaption>Auto Stitch</figcaption>
 			<div class="img-slot">
 				<img src="partB/auto_case1.png">
             </div>
